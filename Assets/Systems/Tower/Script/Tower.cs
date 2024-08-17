@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEditor.Rendering;
 using UnityEngine;
 
+[Serializable]
 public enum DamageType
 {
     Light,
@@ -11,6 +12,7 @@ public enum DamageType
     Heavy
 }
 
+[Serializable]
 public struct BonusStats
 {
     public int attackProjectalsCount;
@@ -23,6 +25,7 @@ public struct BonusStats
 public class Tower : MonoBehaviour
 {
 
+    public Transform towerVisual;
     public string towerName;
     public int tier;
 
@@ -31,7 +34,7 @@ public class Tower : MonoBehaviour
 
 
     public int damage;
-    public DamageType damegeType = DamageType.Medium;
+    public DamageType damageType = DamageType.Medium;
     public float range;
     public float attackSpeed = 1;
     private float timeFromlastAttack;
@@ -43,7 +46,7 @@ public class Tower : MonoBehaviour
     public float cursePower = 0;
 
     public BonusStats supportStats;
-    public List<Tower> supporters;
+    public List<Tower> supporters = new List<Tower>();
     public Tower supportedTower;
 
     //Public Enemy Target
@@ -52,7 +55,7 @@ public class Tower : MonoBehaviour
     {
         //Find Target
         //if true Shot
-        //else check Aim
+        //else to nic
     }
 
 
@@ -60,7 +63,7 @@ public class Tower : MonoBehaviour
     {
         if (!CanSupport()) return;
         
-        if(!supportedTower.AddSupporter(towerToSuport)) return;
+        if(!towerToSuport.AddSupporter(this)) return;
 
         supportedTower = towerToSuport;
         UpdateStats();
@@ -68,9 +71,12 @@ public class Tower : MonoBehaviour
 
     public void UnSupport()
     {
-        supportedTower.RemoveSupporter(this);
-        supportedTower = null;
-        UpdateStats();
+        if (supportedTower != null)
+        {
+            supportedTower.RemoveSupporter(this);
+            supportedTower = null;
+            UpdateStats();
+        }
     }
 
     public bool AddSupporter(Tower tower)
@@ -96,13 +102,13 @@ public class Tower : MonoBehaviour
     private bool CanSupport()
     {
         if (supporters.Count == 0 && supportedTower == null)
-            return false;
-        return true;
+            return true;
+        return false;
     }
 
     private bool CanBeSupported()
     {
-        if (supporters.Count == 1 + ((tier - 1) * 2) && supportedTower == null)
+        if (supporters.Count == 1 + ((tier - 1) * 2) || supportedTower != null)
             return false;
         return true;
     }
@@ -115,15 +121,18 @@ public class Tower : MonoBehaviour
             sizeXZ = 1 + (0.06f * supportersCount);
             sizeY = 1 + (0.12f * supportersCount);
 
-            if(supportersCount>0) damegeType = DamageType.Heavy;
-            else damegeType = DamageType.Medium;
+            if(supportersCount>0) damageType = DamageType.Heavy;
+            else damageType = DamageType.Medium;
         }
         else
         {
-            damegeType = DamageType.Light;
+            damageType = DamageType.Light;
             sizeXZ = 0.7f;
             sizeY = 0.7f;
         }
+
+        towerVisual.transform.localScale = new Vector3(sizeXZ, sizeY, sizeXZ);
+
     }
 
     public void AddBonusStats(BonusStats stats)
