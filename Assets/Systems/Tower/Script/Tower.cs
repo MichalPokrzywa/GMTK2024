@@ -23,7 +23,7 @@ public struct BonusStats
 }
 
 
-public class Tower : MonoBehaviour
+public class Tower : GameTileContent
 {
 
     public Transform towerVisual;
@@ -154,7 +154,7 @@ public class Tower : MonoBehaviour
     }
 
 
-    public void Update()
+    public override void GameUpdate()
     {
         if(!isShooting)
         {

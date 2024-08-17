@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameTileContent : MonoBehaviour
 {
     [SerializeField] GameTileContentType type = default;
+    public bool BlocksPath => Type == GameTileContentType.Wall || Type == GameTileContentType.Tower;
     private GameTileContentFactory originFactory;
     public GameTileContentType Type => type;
     public GameTileContentFactory OriginFactory
@@ -16,7 +17,7 @@ public class GameTileContent : MonoBehaviour
             originFactory = value;
         }
     }
-
+    public virtual void GameUpdate() { }
     public void Recycle()
     {
         originFactory.Reclaim(this);
