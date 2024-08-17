@@ -6,7 +6,11 @@ public class Game : MonoBehaviour
 {
     [SerializeField] private Vector2Int boardSize = new Vector2Int(11, 11);
     [SerializeField] private GameBoard board = default;
-    [SerializeField] private GameTileContentFactory tileContentFactory = default;
+    [SerializeField] private GameTileContentFactory tileContentFactory = default; 
+    [SerializeField] private EnemyFactory enemyFactory = default;
+    [SerializeField, Range(0.1f, 10f)] float spawnSpeed = 1f;
+    private float spawnProgress;
+    private EnemyCollection enemies = new EnemyCollection();
     Ray TouchRay => Camera.main.ScreenPointToRay(Input.mousePosition);
     void Awake()
     {
@@ -31,8 +35,22 @@ public class Game : MonoBehaviour
         {
             board.ShowGrid = !board.ShowGrid;
         }
+        spawnProgress += spawnSpeed * Time.deltaTime;
+        while (spawnProgress >= 1f)
+        {
+            spawnProgress -= 1f;
+            SpawnEnemy();
+        }
+        enemies.GameUpdate();
     }
-
+    void SpawnEnemy()
+    {
+        GameTile spawnPoint =
+            board.GetSpawnPoint(Random.Range(0, board.SpawnPointCount));
+        Enemy enemy = enemyFactory.Get();
+        enemy.SpawnOn(spawnPoint);
+        enemies.Add(enemy);
+    }
     void HandleTouch()
     {
         GameTile tile = board.GetTile(TouchRay);
@@ -65,6 +83,31 @@ public class Game : MonoBehaviour
         if (boardSize.y < 2)
         {
             boardSize.y = 2;
+        }
+    }
+}
+[System.Serializable]
+public class EnemyCollection
+{
+
+    List<Enemy> enemies = new List<Enemy>();
+
+    public void Add(Enemy enemy)
+    {
+        enemies.Add(enemy);
+    }
+
+    public void GameUpdate()
+    {
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            if (!enemies[i].GameUpdate())
+            {
+                int lastIndex = enemies.Count - 1;
+                enemies[i] = enemies[lastIndex];
+                enemies.RemoveAt(lastIndex);
+                i -= 1;
+            }
         }
     }
 }

@@ -16,7 +16,17 @@ public class Enemy : MonoBehaviour
     private int tilesToEnd;
     GameTile tileFrom, tileTo;
     Vector3 positionFrom, positionTo;
+    private EnemyFactory originFactory;
     float progress;
+    public EnemyFactory OriginFactory
+    {
+        get => originFactory;
+        set
+        {
+            Debug.Assert(originFactory == null, "Redefined origin factory!");
+            originFactory = value;
+        }
+    }
     public enum ArmorType
     {
         Light,
@@ -38,7 +48,7 @@ public class Enemy : MonoBehaviour
     }
     public bool GameUpdate()
     {
-        progress += Time.deltaTime * speed;
+        progress += Time.deltaTime;
         while (progress >= 1f)
         {
             tileFrom = tileTo;
@@ -49,16 +59,16 @@ public class Enemy : MonoBehaviour
                 return false;
             }
             positionFrom = positionTo;
-            positionTo = tileFrom.ExitPoint; ;
+            positionTo = tileTo.transform.localPosition;
             progress -= 1f;
         }
         transform.localPosition =
             Vector3.LerpUnclamped(positionFrom, positionTo, progress);
+        transform.localPosition += Vector3.forward * Time.deltaTime;
         return true;
     }
     public void SpawnOn(GameTile tile)
     {
-        //transform.localPosition = tile.transform.localPosition;
         Debug.Assert(tile.NextTileOnPath != null, "Nowhere to go!", this);
         tileFrom = tile;
         tileTo = tile.NextTileOnPath;

@@ -459,6 +459,12 @@ PrefabInstance:
       objectReference: {fileID: 1244775840}
     - target: {fileID: 8044153040252060069, guid: 895e8cb160ed2dc41a6fe4df91084f02,
         type: 3}
+      propertyPath: enemyFactory
+      value: 
+      objectReference: {fileID: 11400000, guid: 36e1f851be87a234b8c1ad0f2da2df02,
+        type: 2}
+    - target: {fileID: 8044153040252060069, guid: 895e8cb160ed2dc41a6fe4df91084f02,
+        type: 3}
       propertyPath: tileContentFactory
       value: 
       objectReference: {fileID: 11400000, guid: d550ed9648365ef47b35ea191ce061be,

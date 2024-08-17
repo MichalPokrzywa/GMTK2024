@@ -15,13 +15,13 @@ public class SceneLoader
         SceneManager.LoadScene(index);
     }
 
-    public void LoadScene(Scene scene)
+    public void LoadScene(GameScene scene)
     {
         LoadScene((int)scene);
     }
 }
 
-public enum Scene
+public enum GameScene
 {
     Initialization = 0,
     Menu = 1,

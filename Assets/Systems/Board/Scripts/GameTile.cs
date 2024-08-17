@@ -15,7 +15,12 @@ public class GameTile : MonoBehaviour
         westRotation = Quaternion.Euler(90f, 270f, 0f);
 
     public bool HasPath => distance != int.MaxValue;
+
+    public Vector3 ExitPoint { get; private set; }
+    public int TileId { get; set; }
     public bool IsAlternative { get; set; }
+
+    public GameTile NextTileOnPath => nextOnPath;
     public GameTile GrowPathNorth() => GrowPathTo(north);
 
     public GameTile GrowPathEast() => GrowPathTo(east);
@@ -78,6 +83,7 @@ public class GameTile : MonoBehaviour
         }
         neighbor.distance = distance + 1;
         neighbor.nextOnPath = this;
+        neighbor.ExitPoint = (neighbor.transform.localPosition + transform.localPosition) * 0.5f;
         return neighbor.Content.Type != GameTileContentType.Wall ? neighbor : null; ;
     }
 

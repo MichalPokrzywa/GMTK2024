@@ -72,6 +72,7 @@ public class GameBoard : MonoBehaviour
                 tile.transform.SetParent(transform, false);
                 tile.transform.localPosition = new Vector3(x - offset.x, 0f, y - offset.y);
                 tile.IsAlternative = (x & 1) == 0;
+                tile.TileId = i;
                 if ((y & 1) == 0)
                 {
                     tile.IsAlternative = !tile.IsAlternative;

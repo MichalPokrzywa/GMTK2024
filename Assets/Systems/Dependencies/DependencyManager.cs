@@ -15,6 +15,6 @@ public class DependencyManager : MonoBehaviour
         audioManager = GetComponentInChildren<AudioManager>();
         translationManager = GetComponentInChildren<TranslationManager>();
 
-        sceneLoader.LoadScene(Scene.Menu);
+        sceneLoader.LoadScene(GameScene.Menu);
     }
 }
