@@ -27,12 +27,6 @@ public class Enemy : MonoBehaviour
             originFactory = value;
         }
     }
-    public enum ArmorType
-    {
-        Light,
-        Medium,
-        Heavy,
-    }
 
     // Start is called before the first frame update
     void Start()
@@ -59,7 +53,7 @@ public class Enemy : MonoBehaviour
                 return false;
             }
             positionFrom = positionTo;
-            positionTo = tileTo.transform.localPosition;
+            transform.localRotation = tileFrom.PathDirection.GetRotation();
             progress -= 1f;
         }
         transform.localPosition =
@@ -73,7 +67,7 @@ public class Enemy : MonoBehaviour
         tileFrom = tile;
         tileTo = tile.NextTileOnPath;
         positionFrom = tileFrom.transform.localPosition;
-        positionTo = tileFrom.ExitPoint;
+        transform.localRotation = tileFrom.PathDirection.GetRotation();
         progress = 0f;
     }
 
@@ -120,4 +114,11 @@ public class Enemy : MonoBehaviour
         this.mediumArmor = mediumArmor;
         this.heavyArmor = heavyArmor;
     }
+}
+
+public enum ArmorType
+{
+    Light,
+    Medium,
+    Heavy,
 }
