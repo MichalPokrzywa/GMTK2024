@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1778395792177542791}
   - component: {fileID: 8862228848380245237}
   m_Layer: 0
-  m_Name: Destination
+  m_Name: Spawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e8f77fda1357a243b127060cc273b3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 1
+  type: 3
 --- !u!1 &6560604626526619170
 GameObject:
   m_ObjectHideFlags: 0
@@ -99,7 +99,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 47e47cda2bd5a24488b82e7d489a7d5c, type: 2}
+  - {fileID: 2100000, guid: 17694362994cc684cb47933cb788e7c9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
