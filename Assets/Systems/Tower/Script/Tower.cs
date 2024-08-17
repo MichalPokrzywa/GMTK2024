@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Rendering;
+using UnityEditor.Rendering.Universal;
 using UnityEngine;
 
 [Serializable]
@@ -32,6 +33,7 @@ public class Tower : MonoBehaviour
     public float sizeXZ = 1;
     public float sizeY = 1;
 
+    public int tileId;
 
     public int damage;
     public DamageType damageType = DamageType.Medium;
@@ -166,6 +168,27 @@ public class Tower : MonoBehaviour
             
         }
         
+    }
+
+    public bool TierUp()
+    {
+        if (tier < 3)
+        {
+            tier++;
+            return true;
+        }
+        return false;
+    }
+
+    public int Sell()
+    {
+        UnSupport();
+        foreach(var i in supporters)
+        {
+            i.UnSupport();
+        }
+        //usun wierzyczke, przywroc tile
+        return 100;
     }
 
 }
