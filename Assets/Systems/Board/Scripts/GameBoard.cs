@@ -6,10 +6,53 @@ public class GameBoard : MonoBehaviour
 {
     [SerializeField] private Transform ground = default;
     [SerializeField] GameTile tilePrefab = default;
+    [SerializeField] Texture2D gridTexture = default;
     private Vector2Int size;
     private GameTile[] tiles;
     private Queue<GameTile> searchFrontier = new Queue<GameTile>();
     private GameTileContentFactory contentFactory;
+    private bool showGrid, showPaths;
+
+    public bool ShowGrid
+    {
+        get => showGrid;
+        set
+        {
+            showGrid = value;
+            Material m = ground.GetComponent<MeshRenderer>().material;
+            if (showGrid)
+            {
+                m.mainTexture = gridTexture;
+                m.SetTextureScale("_BaseMap", size);
+            }
+            else
+            {
+                m.mainTexture = null;
+            }
+        }
+    }
+    public bool ShowPaths
+    {
+        get => showPaths;
+        set
+        {
+            showPaths = value;
+            if (showPaths)
+            {
+                foreach (GameTile tile in tiles)
+                {
+                    tile.ShowPath();
+                }
+            }
+            else
+            {
+                foreach (GameTile tile in tiles)
+                {
+                    tile.HidePath();
+                }
+            }
+        }
+    }
     public void Initialize(Vector2Int size, GameTileContentFactory contentFactory)
     {
         this.size = size;
@@ -17,6 +60,7 @@ public class GameBoard : MonoBehaviour
         ground.localScale = new Vector3(size.x, size.y, 1f);
         Vector2 offset = new Vector2((size.x - 1) * 0.5f, (size.y - 1) * 0.5f);
         tiles = new GameTile[size.x * size.y];
+
         for (int i = 0, y = 0; y < size.y; y++)
         {
             for (int x = 0; x < size.x; x++, i++)
@@ -101,8 +145,20 @@ public class GameBoard : MonoBehaviour
         }
         foreach (GameTile tile in tiles)
         {
-            tile.ShowPath();
+            if (!tile.HasPath)
+            {
+                return false;
+            }
         }
+
+        if (showPaths)
+        {
+            foreach (GameTile tile in tiles)
+            {
+                tile.ShowPath();
+            }
+        }
+
         return true;
     }
     public void ToggleDestination(GameTile tile)
@@ -116,10 +172,27 @@ public class GameBoard : MonoBehaviour
                 FindPaths();
             }
         }
-        else
+        else if(tile.Content.Type == GameTileContentType.Empty)
         {
             tile.Content = contentFactory.Get(GameTileContentType.Destination);
             FindPaths();
+        }
+    }
+    public void ToggleWall(GameTile tile)
+    {
+        if (tile.Content.Type == GameTileContentType.Wall)
+        {
+            tile.Content = contentFactory.Get(GameTileContentType.Empty);
+            FindPaths();
+        }
+        else if (tile.Content.Type == GameTileContentType.Empty)
+        {
+            tile.Content = contentFactory.Get(GameTileContentType.Wall);
+            if (!FindPaths())
+            {
+                tile.Content = contentFactory.Get(GameTileContentType.Empty);
+                FindPaths();
+            }
         }
     }
 }

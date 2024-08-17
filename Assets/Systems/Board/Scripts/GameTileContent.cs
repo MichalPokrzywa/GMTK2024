@@ -24,5 +24,5 @@ public class GameTileContent : MonoBehaviour
 }
 public enum GameTileContentType
 {
-    Empty, Destination
+    Empty, Destination, Wall
 }
