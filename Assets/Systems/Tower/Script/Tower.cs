@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEditor.Rendering;
 using UnityEditor.Rendering.Universal;
 using UnityEngine;
+using UnityEngine.Events;
 
 [Serializable]
 public enum DamageType
@@ -25,6 +26,9 @@ public struct BonusStats
 
 public class Tower : GameTileContent
 {
+    public UnityEvent<Tower> onSupport;
+    public UnityEvent<Tower> onUnsupport;
+
     TargetPoint target;
 
     public Transform towerVisual;
@@ -69,6 +73,7 @@ public class Tower : GameTileContent
         
         if(!towerToSuport.AddSupporter(this)) return;
 
+        onSupport.Invoke(towerToSuport);
         supportedTower = towerToSuport;
         UpdateStats();
     }
@@ -77,6 +82,7 @@ public class Tower : GameTileContent
     {
         if (supportedTower != null)
         {
+            onUnsupport.Invoke(supportedTower);
             supportedTower.RemoveSupporter(this);
             supportedTower = null;
             UpdateStats();
