@@ -125,7 +125,7 @@ public class EnemyCollection
         }
     }
 }
-<<<<<<< Updated upstream
+
 
 public class TowerCollection
 {
@@ -143,7 +143,7 @@ public class TowerCollection
         }
     }
 }
-=======
+
 [System.Serializable]
 public class Round
 {
@@ -169,4 +169,3 @@ public class IntDouble
         value2 = v2;
     }
 }
->>>>>>> Stashed changes
