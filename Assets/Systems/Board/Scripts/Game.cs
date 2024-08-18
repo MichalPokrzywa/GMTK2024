@@ -118,3 +118,20 @@ public class EnemyCollection
         }
     }
 }
+
+public class TowerCollection
+{
+    List<Tower> towers = new List<Tower>();
+    public void Add(Tower tower)
+    {
+        towers.Add(tower);
+    }
+
+    public void GameUpdate()
+    {
+        for (int i = 0; i < towers.Count; i++)
+        {
+            towers[i].GameUpdate();
+        }
+    }
+}

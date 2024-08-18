@@ -25,6 +25,7 @@ public struct BonusStats
 
 public class Tower : GameTileContent
 {
+    TargetPoint target;
 
     public Transform towerVisual;
     public string towerName;
@@ -37,7 +38,8 @@ public class Tower : GameTileContent
 
     public int damage;
     public DamageType damageType = DamageType.Medium;
-    public float range;
+    [SerializeField, Range(1.5f, 10.5f)]
+    public float range = 1.5f;
     public float attackSpeed = 1;
     private float timeFromlastAttack;
     private bool isShooting = false;
@@ -156,12 +158,16 @@ public class Tower : GameTileContent
 
     public override void GameUpdate()
     {
-        if(!isShooting)
+        if (AcquireTarget())
+        {
+            Debug.Log("Acquired target!");
+        }
+        if (!isShooting)
         {
             if (timeFromlastAttack >= attackSpeed)
             {
                 Aim();
-
+                
             }
             else
                 timeFromlastAttack += Time.deltaTime;
@@ -189,6 +195,29 @@ public class Tower : GameTileContent
         }
         //usun wierzyczke, przywroc tile
         return 100;
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Vector3 position = transform.localPosition;
+        position.y += 0.01f;
+        Gizmos.DrawWireSphere(position, range);
+    }
+
+    bool AcquireTarget()
+    {
+        Collider[] targets = Physics.OverlapSphere(
+            transform.localPosition, range
+        );
+        if (targets.Length > 0)
+        {
+            target = targets[0].GetComponent<TargetPoint>();
+            Debug.Assert(target != null, "Targeted non-enemy!", targets[0]);
+            return true;
+        }
+        target = null;
+        return false;
     }
 
 }
