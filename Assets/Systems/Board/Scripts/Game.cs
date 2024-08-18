@@ -94,6 +94,10 @@ public class Game : MonoBehaviour
             boardSize.y = 2;
         }
     }
+    public void addTower(Tower tower)
+    {
+        towers.Add(tower);
+    }
 }
 [System.Serializable]
 public class EnemyCollection
