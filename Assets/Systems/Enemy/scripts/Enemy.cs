@@ -16,11 +16,11 @@ public class Enemy : MonoBehaviour
     float directionAngleFrom, directionAngleTo;
     float progress, progressFactor;
     float pathOffset;
-    float speed;
-    private int hp;
-    private float lightArmor;
-    private float mediumArmor;
-    private float heavyArmor;
+    [SerializeField] float speed;
+    [SerializeField] private int hp;
+    [SerializeField] private float lightArmor;
+    [SerializeField] private float mediumArmor;
+    [SerializeField] private float heavyArmor;
     private bool curse;
     private float cursePower;
     private int tilesToEnd;
@@ -64,9 +64,8 @@ public class Enemy : MonoBehaviour
         return true;
     }
 
-    public void Initialize(float speed, float pathOffset)
+    public void Initialize(float pathOffset)
     {
-        this.speed = speed;
         this.pathOffset = pathOffset;
         curse = false;
         cursePower = 0;
@@ -172,13 +171,13 @@ public class Enemy : MonoBehaviour
         switch (dmgType)
         {
             case DamageType.Light:
-                hp = hp - (int)(dmg - dmg * lightArmor);
+                hp = hp - (int)(dmg * lightArmor);
                 break;
             case DamageType.Medium:
-                hp = hp - (int)(dmg - dmg * mediumArmor);
+                hp = hp - (int)(dmg * mediumArmor);
                 break;
             case DamageType.Heavy:
-                hp = hp - (int)(dmg - dmg * heavyArmor);
+                hp = hp - (int)(dmg * heavyArmor);
                 break;
         }
     }

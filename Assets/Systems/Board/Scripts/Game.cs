@@ -1,6 +1,7 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Game : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class Game : MonoBehaviour
     [SerializeField] private GameBoard board = default;
     [SerializeField] private GameTileContentFactory tileContentFactory = default; 
     [SerializeField] private EnemyFactory enemyFactory = default;
+    [SerializeField] private List<Round> rounds = new List<Round>();
     [SerializeField, Range(0.1f, 10f)] float spawnSpeed = 1f;
     private float spawnProgress;
     private EnemyCollection enemies = new EnemyCollection();
@@ -43,11 +45,16 @@ public class Game : MonoBehaviour
         }
         enemies.GameUpdate();
     }
+
+    public void waveController()
+    {
+        Debug.Log("no siema");
+    }
     void SpawnEnemy()
     {
         GameTile spawnPoint =
-            board.GetSpawnPoint(Random.Range(0, board.SpawnPointCount));
-        Enemy enemy = enemyFactory.Get();
+            board.GetSpawnPoint(UnityEngine.Random.Range(0, board.SpawnPointCount));
+        Enemy enemy = enemyFactory.Get(1);
         enemy.SpawnOn(spawnPoint);
         enemies.Add(enemy);
     }
@@ -119,6 +126,7 @@ public class EnemyCollection
     }
 }
 
+
 public class TowerCollection
 {
     List<Tower> towers = new List<Tower>();
@@ -133,5 +141,31 @@ public class TowerCollection
         {
             towers[i].GameUpdate();
         }
+    }
+}
+
+[System.Serializable]
+public class Round
+{
+    [SerializeField]
+    private List<IntDouble> round;
+
+    public Round() 
+    { 
+        
+    }
+    
+}
+
+public class IntDouble
+{
+    public int value1;
+    public int value2;
+
+    // Konstruktor dla ³atwiejszego tworzenia obiektów tej klasy
+    public IntDouble(int v1, int v2)
+    {
+        value1 = v1;
+        value2 = v2;
     }
 }
