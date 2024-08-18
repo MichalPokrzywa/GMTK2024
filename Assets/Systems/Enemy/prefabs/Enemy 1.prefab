@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2668571716558726591}
   - component: {fileID: 3368857004507944482}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: Enemy 1
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,11 +46,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   model: {fileID: 1811565225202472121}
-  speed: 2
-  hp: 50
-  lightArmor: 0.8
-  mediumArmor: 0.8
-  heavyArmor: 1
+  speed: 5
+  hp: 20
+  lightArmor: 1
+  mediumArmor: 0.4
+  heavyArmor: 0.1
 --- !u!1 &2595518874659440456
 GameObject:
   m_ObjectHideFlags: 0
@@ -77,7 +77,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8185632257341990589}
@@ -124,7 +124,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7654354194966249245}
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &554104831177236973
 MeshRenderer:
   m_ObjectHideFlags: 0
