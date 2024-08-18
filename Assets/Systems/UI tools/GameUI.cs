@@ -15,12 +15,6 @@ public class GameUI : MonoBehaviour
         textMeshProUGUI.text = "Round: ";
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void onButtonClick()
     {
         game.waveController();

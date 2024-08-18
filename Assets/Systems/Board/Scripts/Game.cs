@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,7 +11,7 @@ public class Game : MonoBehaviour
     [SerializeField] private GameTileContentFactory tileContentFactory = default; 
     [SerializeField] private EnemyFactory enemyFactory = default;
     [SerializeField] private List<Round> rounds = new List<Round>();
-    [SerializeField, Range(0.1f, 10f)] float spawnSpeed = 1f;
+    private int roundIndex;
     private float spawnProgress;
     private EnemyCollection enemies = new EnemyCollection();
     Ray TouchRay => Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -18,6 +19,7 @@ public class Game : MonoBehaviour
     {
         board.Initialize(boardSize, tileContentFactory);
         board.ShowGrid = true;
+        roundIndex = 0;
     }
     void Update()
     {
@@ -37,24 +39,19 @@ public class Game : MonoBehaviour
         {
             board.ShowGrid = !board.ShowGrid;
         }
-        spawnProgress += spawnSpeed * Time.deltaTime;
-        while (spawnProgress >= 1f)
-        {
-            spawnProgress -= 1f;
-            SpawnEnemy();
-        }
+        
         enemies.GameUpdate();
     }
 
     public void waveController()
     {
-        Debug.Log("no siema");
+        StartCoroutine(SpawnWaves());
     }
-    void SpawnEnemy()
+    void SpawnEnemy(Enemy i)
     {
         GameTile spawnPoint =
             board.GetSpawnPoint(UnityEngine.Random.Range(0, board.SpawnPointCount));
-        Enemy enemy = enemyFactory.Get(1);
+        Enemy enemy = enemyFactory.Get(i);
         enemy.SpawnOn(spawnPoint);
         enemies.Add(enemy);
     }
@@ -99,7 +96,33 @@ public class Game : MonoBehaviour
             boardSize.y = 2;
         }
     }
+    IEnumerator SpawnWaves()
+    {
+        Round round = rounds[roundIndex];
+        List<IntTriple> mobList = round.getMobs();
+        foreach (IntTriple mob in mobList)
+        {
+            int amountOfEnemy;
+            Enemy enemyType;
+            float timeToSpawn;
+            enemyType = mob.getEnemyType();
+            amountOfEnemy = mob.getEnemyAmount();
+            timeToSpawn = mob.getTimeToSpawn();
+            for (int i = 0; i < amountOfEnemy; i++)
+            {
+                yield return new WaitForSeconds(timeToSpawn);
+                SpawnEnemy(enemyType);
+            }
+        }
+        roundIndex++;
+    }
 }
+
+
+//jakieœ tam innne hocki klocki
+
+
+
 [System.Serializable]
 public class EnemyCollection
 {
@@ -148,24 +171,39 @@ public class TowerCollection
 public class Round
 {
     [SerializeField]
-    private List<IntDouble> round;
+    private List<IntTriple> round;
 
-    public Round() 
-    { 
-        
+    public List<IntTriple> getMobs()
+    {
+        return round;
     }
     
 }
-
-public class IntDouble
+[System.Serializable]
+public class IntTriple
 {
-    public int value1;
-    public int value2;
+    public Enemy enemyType;
+    public int enemyAmount;
+    public float timeToSpawn;
 
     // Konstruktor dla ³atwiejszego tworzenia obiektów tej klasy
-    public IntDouble(int v1, int v2)
+    public IntTriple(Enemy v1, int v2, float v3)
     {
-        value1 = v1;
-        value2 = v2;
+        enemyType = v1;
+        enemyAmount = v2;
+        timeToSpawn = v3;
+    }
+
+    public Enemy getEnemyType()
+    {
+        return enemyType;
+    }
+    public int getEnemyAmount()
+    {
+        return enemyAmount;
+    }
+    public float getTimeToSpawn()
+    {
+        return timeToSpawn;
     }
 }
