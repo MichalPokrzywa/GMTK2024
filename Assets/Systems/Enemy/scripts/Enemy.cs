@@ -1,30 +1,30 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static BgTools.Dialogs.TextValidator;
-
-// BYKU KURWA NIE DZIA£A
 
 public class Enemy : MonoBehaviour
 {
+
     [SerializeField]
     Transform model = default;
+
+    EnemyFactory originFactory;
+
+    GameTile tileFrom, tileTo;
+    Vector3 positionFrom, positionTo;
+    Direction direction;
+    DirectionChange directionChange;
+    float directionAngleFrom, directionAngleTo;
+    float progress, progressFactor;
+    float pathOffset;
+    float speed;
     private int hp;
-    private float speed;
     private float lightArmor;
     private float mediumArmor;
     private float heavyArmor;
     private bool curse;
     private float cursePower;
     private int tilesToEnd;
-    float pathOffset;
-    GameTile tileFrom, tileTo;
-    Vector3 positionFrom, positionTo;
-    private EnemyFactory originFactory;
-    float progress, progressFactor;
-    Direction direction;
-    DirectionChange directionChange;
-    float directionAngleFrom, directionAngleTo;
+
     public EnemyFactory OriginFactory
     {
         get => originFactory;
@@ -35,12 +35,6 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        curse = false;
-        cursePower = 0;
-    }
     public bool GameUpdate()
     {
         progress += Time.deltaTime * progressFactor;
@@ -58,45 +52,34 @@ public class Enemy : MonoBehaviour
         if (directionChange == DirectionChange.None)
         {
             transform.localPosition =
-            Vector3.LerpUnclamped(positionFrom, positionTo, progress);
-
+                Vector3.LerpUnclamped(positionFrom, positionTo, progress);
         }
         else
         {
-            float angle = Mathf.LerpUnclamped(directionAngleFrom, directionAngleTo, progress);
+            float angle = Mathf.LerpUnclamped(
+                directionAngleFrom, directionAngleTo, progress
+            );
             transform.localRotation = Quaternion.Euler(0f, angle, 0f);
         }
         return true;
     }
+
+    public void Initialize(float speed, float pathOffset)
+    {
+        this.speed = speed;
+        this.pathOffset = pathOffset;
+        curse = false;
+        cursePower = 0;
+    }
+
     public void SpawnOn(GameTile tile)
     {
-        Debug.Assert(tile.NextTileOnPath != null, "Nowhere to go!", this);
         tileFrom = tile;
         tileTo = tile.NextTileOnPath;
         progress = 0f;
         PrepareIntro();
     }
 
-    void PrepareIntro()
-    {
-        positionFrom = tileFrom.transform.localPosition;
-        positionTo = tileFrom.ExitPoint;
-        direction = tileFrom.PathDirection;
-        directionChange = DirectionChange.None;
-        directionAngleFrom = directionAngleTo = direction.GetAngle();
-        model.localPosition = new Vector3(pathOffset, 0f);
-        transform.localRotation = direction.GetRotation();
-        progressFactor = 2f * speed;
-    }
-    void PrepareOutro()
-    {
-        positionTo = tileFrom.transform.localPosition;
-        directionChange = DirectionChange.None;
-        directionAngleTo = direction.GetAngle();
-        model.localPosition = new Vector3(pathOffset, 0f);
-        transform.localRotation = direction.GetRotation();
-        progressFactor = 2f * speed;
-    }
     void PrepareNextState()
     {
         tileFrom = tileTo;
@@ -119,6 +102,7 @@ public class Enemy : MonoBehaviour
             default: PrepareTurnAround(); break;
         }
     }
+
     void PrepareForward()
     {
         transform.localRotation = direction.GetRotation();
@@ -126,6 +110,7 @@ public class Enemy : MonoBehaviour
         model.localPosition = new Vector3(pathOffset, 0f);
         progressFactor = speed;
     }
+
     void PrepareTurnRight()
     {
         directionAngleTo = directionAngleFrom + 90f;
@@ -147,9 +132,40 @@ public class Enemy : MonoBehaviour
         directionAngleTo = directionAngleFrom + (pathOffset < 0f ? 180f : -180f);
         model.localPosition = new Vector3(pathOffset, 0f);
         transform.localPosition = positionFrom;
-        progressFactor = speed / (Mathf.PI * Mathf.Max(Mathf.Abs(pathOffset), 0.2f));
+        progressFactor =
+            speed / (Mathf.PI * Mathf.Max(Mathf.Abs(pathOffset), 0.2f));
     }
 
+    void PrepareIntro()
+    {
+        positionFrom = tileFrom.transform.localPosition;
+        positionTo = tileFrom.ExitPoint;
+        direction = tileFrom.PathDirection;
+        directionChange = DirectionChange.None;
+        directionAngleFrom = directionAngleTo = direction.GetAngle();
+        model.localPosition = new Vector3(pathOffset, 0f);
+        transform.localRotation = direction.GetRotation();
+        progressFactor = 2f * speed;
+    }
+
+    void PrepareOutro()
+    {
+        positionTo = tileFrom.transform.localPosition;
+        directionChange = DirectionChange.None;
+        directionAngleTo = direction.GetAngle();
+        model.localPosition = new Vector3(pathOffset, 0f);
+        transform.localRotation = direction.GetRotation();
+        progressFactor = 2f * speed;
+    }
+    public Enemy(int hp, float speed, float lightArmor, float mediumArmor, float heavyArmor)
+    {
+        this.hp = hp;
+        this.speed = speed;
+        this.lightArmor = lightArmor;
+        this.mediumArmor = mediumArmor;
+        this.heavyArmor = heavyArmor;
+
+    }
     public void OnHit(int dmg, DamageType dmgType)
     {
         dmg = dmg + (int)(dmg * cursePower);
@@ -186,20 +202,9 @@ public class Enemy : MonoBehaviour
         cursePower = 0;
         transform.localScale *= 2;
     }
+    public float getProgress()
+    {
+        return tileFrom.getDistance() + progress;
+    }
 
-    public Enemy(int hp, float speed, float lightArmor, float mediumArmor, float heavyArmor)
-    {
-        this.hp = hp;
-        this.speed = speed;
-        this.lightArmor = lightArmor;
-        this.mediumArmor = mediumArmor;
-        this.heavyArmor = heavyArmor;
-    }
-    //tu te¿ do zmiany speed to samo co w factorenemy
-    public void Initialize( float pathOffset, float speed)
-    {
-        this.pathOffset = pathOffset;
-        this.speed = speed;
-    }
 }
-
