@@ -51,7 +51,47 @@ PrefabInstance:
     - target: {fileID: 1466194107222461481, guid: e19552696e4c31a4e989a8e16be0978c,
         type: 3}
       propertyPath: m_Name
-      value: Mortal 1
+      value: Mortal
+      objectReference: {fileID: 0}
+    - target: {fileID: 2987428919959647121, guid: e19552696e4c31a4e989a8e16be0978c,
+        type: 3}
+      propertyPath: tier
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2987428919959647121, guid: e19552696e4c31a4e989a8e16be0978c,
+        type: 3}
+      propertyPath: range
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2987428919959647121, guid: e19552696e4c31a4e989a8e16be0978c,
+        type: 3}
+      propertyPath: damage
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2987428919959647121, guid: e19552696e4c31a4e989a8e16be0978c,
+        type: 3}
+      propertyPath: towerName
+      value: Mortal
+      objectReference: {fileID: 0}
+    - target: {fileID: 2987428919959647121, guid: e19552696e4c31a4e989a8e16be0978c,
+        type: 3}
+      propertyPath: attackSize
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2987428919959647121, guid: e19552696e4c31a4e989a8e16be0978c,
+        type: 3}
+      propertyPath: attackSpeed
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2987428919959647121, guid: e19552696e4c31a4e989a8e16be0978c,
+        type: 3}
+      propertyPath: towerVisual
+      value: 
+      objectReference: {fileID: 649229187165336560}
+    - target: {fileID: 2987428919959647121, guid: e19552696e4c31a4e989a8e16be0978c,
+        type: 3}
+      propertyPath: supportStats.attackSize
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 6001117140812425946, guid: e19552696e4c31a4e989a8e16be0978c,
         type: 3}
