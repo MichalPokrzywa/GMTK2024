@@ -12,9 +12,9 @@ public class EnemyFactory : GameObjectFactory
     FloatRange pathOffset = new FloatRange(0f);
 
 
-    public Enemy Get(int i)
+    public Enemy Get(Enemy ene)
     {
-        Enemy instance = CreateGameObjectInstance(prefab[i]);
+        Enemy instance = CreateGameObjectInstance(prefab.Find(o=>o.Equals(ene)));
         instance.OriginFactory = this;
         //tu do zmiany ta prêdkoœæ tak ¿eby nie by³a losowa tylko odpowiednia dla danego przeciwnika
         instance.Initialize(pathOffset.RandomValueInRange);

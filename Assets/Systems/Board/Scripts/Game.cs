@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,9 +10,11 @@ public class Game : MonoBehaviour
     [SerializeField] private GameBoard board = default;
     [SerializeField] private GameTileContentFactory tileContentFactory = default; 
     [SerializeField] private EnemyFactory enemyFactory = default;
-    [SerializeField] private List<Round> rounds = new List<Round>();
-    [SerializeField, Range(0.1f, 10f)] float spawnSpeed = 1f;
+    [SerializeField] private Scenarios scenario;
+    private int roundIndex;
     private float spawnProgress;
+    private bool roundEnd = true;
+    private bool enemiesAreForming = false;
     private EnemyCollection enemies = new EnemyCollection();
     private TowerCollection towers = new TowerCollection();
     Ray TouchRay => Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -19,6 +22,7 @@ public class Game : MonoBehaviour
     {
         board.Initialize(boardSize, tileContentFactory);
         board.ShowGrid = true;
+        roundIndex = 0;
     }
     void Update()
     {
@@ -38,25 +42,30 @@ public class Game : MonoBehaviour
         {
             board.ShowGrid = !board.ShowGrid;
         }
-        spawnProgress += spawnSpeed * Time.deltaTime;
-        while (spawnProgress >= 1f)
+        if (!enemiesAreForming && (enemies.getEnemies().Count == 0))
         {
-            spawnProgress -= 1f;
-            SpawnEnemy();
+            roundEnd = true;
         }
         enemies.GameUpdate();
         towers.GameUpdate();
     }
 
+    public int getRoundNumber() { return roundIndex; }
+
     public void waveController()
     {
-        Debug.Log("no siema");
+        if ((roundIndex < scenario.rounds.Count) && roundEnd)
+        {
+            roundEnd = false;
+            enemiesAreForming = true;
+            StartCoroutine(SpawnWaves());
+        }
     }
-    void SpawnEnemy()
+    void SpawnEnemy(Enemy i)
     {
         GameTile spawnPoint =
             board.GetSpawnPoint(UnityEngine.Random.Range(0, board.SpawnPointCount));
-        Enemy enemy = enemyFactory.Get(1);
+        Enemy enemy = enemyFactory.Get(i);
         enemy.SpawnOn(spawnPoint);
         enemies.Add(enemy);
     }
@@ -108,6 +117,28 @@ public class Game : MonoBehaviour
     {
         towers.Add(tower);
     }
+    IEnumerator SpawnWaves()
+    {
+        Round round = scenario.rounds[roundIndex];
+        List<IntTriple> mobList = round.getMobs();
+        foreach (IntTriple mob in mobList)
+        {
+            int amountOfEnemy;
+            Enemy enemyType;
+            float timeToSpawn;
+            enemyType = mob.getEnemyType();
+            amountOfEnemy = mob.getEnemyAmount();
+            timeToSpawn = mob.getTimeToSpawn();
+            for (int i = 0; i < amountOfEnemy; i++)
+            {
+                yield return new WaitForSeconds(timeToSpawn);
+                SpawnEnemy(enemyType);
+            }
+        }
+        roundIndex++;
+        enemiesAreForming = false;
+    }
+
 }
 [System.Serializable]
 public class EnemyCollection
@@ -133,6 +164,10 @@ public class EnemyCollection
             }
         }
     }
+    public List<Enemy> getEnemies()
+    {
+        return enemies;
+    }
 }
 
 
@@ -153,28 +188,4 @@ public class TowerCollection
     }
 }
 
-[System.Serializable]
-public class Round
-{
-    [SerializeField]
-    private List<IntDouble> round;
 
-    public Round() 
-    { 
-        
-    }
-    
-}
-
-public class IntDouble
-{
-    public int value1;
-    public int value2;
-
-    // Konstruktor dla ³atwiejszego tworzenia obiektów tej klasy
-    public IntDouble(int v1, int v2)
-    {
-        value1 = v1;
-        value2 = v2;
-    }
-}

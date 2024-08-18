@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour
     float pathOffset;
     [SerializeField] float speed;
     [SerializeField] private int hp;
+    [SerializeField] private int gold;
     [SerializeField] private float lightArmor;
     [SerializeField] private float mediumArmor;
     [SerializeField] private float heavyArmor;
