@@ -721,6 +721,7 @@ GameObject:
   - component: {fileID: 1423462412766895995}
   - component: {fileID: 3120123573884927589}
   - component: {fileID: 9206724069403532237}
+  - component: {fileID: 7118420629309111995}
   m_Layer: 0
   m_Name: TowerUI
   m_TagString: Untagged
@@ -832,3 +833,15 @@ MonoBehaviour:
   startPoint: {fileID: 3394584174840790681}
   endPoint: {fileID: 0}
   connectionLineRenderer: {fileID: 6561874229145158205}
+--- !u!114 &7118420629309111995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8867545564787091401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c1d0b437e859e1489cf4c2a003ce9e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
