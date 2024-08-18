@@ -17,6 +17,7 @@ public class GameUI : MonoBehaviour
 
     public void onButtonClick()
     {
+        textMeshProUGUI.text = "Round: " + game.getRoundNumber();
         game.waveController();
     }
 }

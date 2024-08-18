@@ -10,9 +10,11 @@ public class Game : MonoBehaviour
     [SerializeField] private GameBoard board = default;
     [SerializeField] private GameTileContentFactory tileContentFactory = default; 
     [SerializeField] private EnemyFactory enemyFactory = default;
-    [SerializeField] private List<Round> rounds = new List<Round>();
+    [SerializeField] private Scenarios scenario;
     private int roundIndex;
     private float spawnProgress;
+    private bool roundEnd = true;
+    private bool enemiesAreForming = false;
     private EnemyCollection enemies = new EnemyCollection();
     Ray TouchRay => Camera.main.ScreenPointToRay(Input.mousePosition);
     void Awake()
@@ -39,13 +41,23 @@ public class Game : MonoBehaviour
         {
             board.ShowGrid = !board.ShowGrid;
         }
-        
+        if (!enemiesAreForming && (enemies.getEnemies().Count == 0))
+        {
+            roundEnd = true;
+        }
         enemies.GameUpdate();
     }
 
+    public int getRoundNumber() { return roundIndex; }
+
     public void waveController()
     {
-        StartCoroutine(SpawnWaves());
+        if ((roundIndex < scenario.rounds.Count) && roundEnd)
+        {
+            roundEnd = false;
+            enemiesAreForming = true;
+            StartCoroutine(SpawnWaves());
+        }
     }
     void SpawnEnemy(Enemy i)
     {
@@ -98,7 +110,7 @@ public class Game : MonoBehaviour
     }
     IEnumerator SpawnWaves()
     {
-        Round round = rounds[roundIndex];
+        Round round = scenario.rounds[roundIndex];
         List<IntTriple> mobList = round.getMobs();
         foreach (IntTriple mob in mobList)
         {
@@ -115,7 +127,9 @@ public class Game : MonoBehaviour
             }
         }
         roundIndex++;
+        enemiesAreForming = false;
     }
+
 }
 
 
@@ -147,6 +161,10 @@ public class EnemyCollection
             }
         }
     }
+    public List<Enemy> getEnemies()
+    {
+        return enemies;
+    }
 }
 
 
@@ -167,43 +185,3 @@ public class TowerCollection
     }
 }
 
-[System.Serializable]
-public class Round
-{
-    [SerializeField]
-    private List<IntTriple> round;
-
-    public List<IntTriple> getMobs()
-    {
-        return round;
-    }
-    
-}
-[System.Serializable]
-public class IntTriple
-{
-    public Enemy enemyType;
-    public int enemyAmount;
-    public float timeToSpawn;
-
-    // Konstruktor dla ³atwiejszego tworzenia obiektów tej klasy
-    public IntTriple(Enemy v1, int v2, float v3)
-    {
-        enemyType = v1;
-        enemyAmount = v2;
-        timeToSpawn = v3;
-    }
-
-    public Enemy getEnemyType()
-    {
-        return enemyType;
-    }
-    public int getEnemyAmount()
-    {
-        return enemyAmount;
-    }
-    public float getTimeToSpawn()
-    {
-        return timeToSpawn;
-    }
-}
