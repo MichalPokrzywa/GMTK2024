@@ -11,7 +11,5 @@ public class TargetPoint : MonoBehaviour
     void Awake()
     {
         Enemy = transform.root.GetComponent<Enemy>();
-        Debug.Assert(Enemy != null, "Target point without Enemy root!", this);
     }
-   
 }

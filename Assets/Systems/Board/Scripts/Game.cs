@@ -13,6 +13,7 @@ public class Game : MonoBehaviour
     [SerializeField, Range(0.1f, 10f)] float spawnSpeed = 1f;
     private float spawnProgress;
     private EnemyCollection enemies = new EnemyCollection();
+    private TowerCollection towers = new TowerCollection();
     Ray TouchRay => Camera.main.ScreenPointToRay(Input.mousePosition);
     void Awake()
     {
@@ -44,6 +45,7 @@ public class Game : MonoBehaviour
             SpawnEnemy();
         }
         enemies.GameUpdate();
+        towers.GameUpdate();
     }
 
     public void waveController()
@@ -65,7 +67,10 @@ public class Game : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.LeftShift))
             {
-                board.ToggleTower(tile);
+                //board.ToggleTower(tile);
+                Tower tower = board.AddTower(tile);
+                if (tower != null) 
+                    towers.Add(tower);
             }
             else
             {
@@ -98,6 +103,10 @@ public class Game : MonoBehaviour
         {
             boardSize.y = 2;
         }
+    }
+    public void addTower(Tower tower)
+    {
+        towers.Add(tower);
     }
 }
 [System.Serializable]

@@ -218,12 +218,16 @@ public class Tower : GameTileContent
         );
         if (targets.Length > 0)
         {
-            target = targets[0].GetComponent<TargetPoint>();
-            Debug.Assert(target != null, "Targeted non-enemy!", targets[0]);
+            for (int i = 0; i< targets.Length; i++)
+            {
+                target = targets[i].GetComponent<TargetPoint>();
+                if(target != null) break;
+                Debug.Log("Targeted not worked on: " + targets[i]);
+            }
+            Debug.Log(target == null ? "Targeted non-enemy!" : target);
             return true;
         }
         target = null;
         return false;
     }
-
 }
