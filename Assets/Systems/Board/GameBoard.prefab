@@ -152,3 +152,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ground: {fileID: 454558244755847379}
+  tilePrefab: {fileID: 200910760866523331, guid: 0bb5cfa827e922f42afc5fdf35657337,
+    type: 3}
+  gridTexture: {fileID: 2800000, guid: cbee9301edea4144f80394ccabc15779, type: 3}

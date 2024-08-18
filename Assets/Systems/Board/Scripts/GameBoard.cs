@@ -15,8 +15,6 @@ public class GameBoard : MonoBehaviour
     private bool showGrid, showPaths;
     public int SpawnPointCount => spawnPoints.Count;
 
-
-
     public bool ShowGrid
     {
         get => showGrid;
@@ -58,9 +56,9 @@ public class GameBoard : MonoBehaviour
         }
     }
 
-    public void Initialize(Vector2Int size, GameTileContentFactory contentFactory)
+    public void Initialize(GameMap gameMap, GameTileContentFactory contentFactory)
     {
-        this.size = size;
+        size = new Vector2Int(gameMap.xSize, gameMap.ySize);
         this.contentFactory = contentFactory;
         ground.localScale = new Vector3(size.x, size.y, 1f);
         Vector2 offset = new Vector2((size.x - 1) * 0.5f, (size.y - 1) * 0.5f);
@@ -87,12 +85,32 @@ public class GameBoard : MonoBehaviour
                 {
                     GameTile.MakeNorthSouthNeighbors(tile, tiles[i - size.x]);
                 }
-                tile.Content = contentFactory.Get(GameTileContentType.Empty);
-
+                tile.Content = contentFactory.Get((GameTileContentType)gameMap.values[i]);
             }
         }
-        ToggleDestination(tiles[tiles.Length / 2]);
-        ToggleSpawnPoint(tiles[0]);
+
+        //for (int i = 0; i < tiles.Length; i++)
+        //{
+        //    if (gameMap.values[i] != 0)
+        //    {
+        //        switch (gameMap.values[i])
+        //        {
+        //            case 1:
+        //                ToggleWall(tiles[i]);
+        //                break;
+        //            case 2:
+        //                ToggleDestination(tiles[i]);
+        //                break;
+        //            case 3:
+        //                ToggleSpawnPoint(tiles[i]);
+        //                break;
+        //        }
+        //    }
+
+        //}
+        //ToggleDestination(tiles[tiles.Length / 2]);
+        //ToggleSpawnPoint(tiles[0]);
+        FindPaths();
     }
     public GameTile GetTile(Ray ray)
     {

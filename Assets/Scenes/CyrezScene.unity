@@ -565,23 +565,6 @@ PrefabInstance:
       propertyPath: board
       value: 
       objectReference: {fileID: 1244775840}
-    - target: {fileID: 8044153040252060069, guid: 895e8cb160ed2dc41a6fe4df91084f02,
-        type: 3}
-      propertyPath: spawnSpeed
-      value: 3.33
-      objectReference: {fileID: 0}
-    - target: {fileID: 8044153040252060069, guid: 895e8cb160ed2dc41a6fe4df91084f02,
-        type: 3}
-      propertyPath: enemyFactory
-      value: 
-      objectReference: {fileID: 11400000, guid: 36e1f851be87a234b8c1ad0f2da2df02,
-        type: 2}
-    - target: {fileID: 8044153040252060069, guid: 895e8cb160ed2dc41a6fe4df91084f02,
-        type: 3}
-      propertyPath: tileContentFactory
-      value: 
-      objectReference: {fileID: 11400000, guid: d550ed9648365ef47b35ea191ce061be,
-        type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -600,17 +583,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameBoard
       objectReference: {fileID: 0}
-    - target: {fileID: 5285468786663998337, guid: 9dc8b7c55207e6d498f3ea43d8c63f9a,
-        type: 3}
-      propertyPath: tilePrefab
-      value: 
-      objectReference: {fileID: 200910760866523331, guid: 0bb5cfa827e922f42afc5fdf35657337,
-        type: 3}
-    - target: {fileID: 5285468786663998337, guid: 9dc8b7c55207e6d498f3ea43d8c63f9a,
-        type: 3}
-      propertyPath: gridTexture
-      value: 
-      objectReference: {fileID: 2800000, guid: cbee9301edea4144f80394ccabc15779, type: 3}
     - target: {fileID: 6092025068127950973, guid: 9dc8b7c55207e6d498f3ea43d8c63f9a,
         type: 3}
       propertyPath: m_LocalPosition.x

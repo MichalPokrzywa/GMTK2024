@@ -8,9 +8,10 @@ public class Game : MonoBehaviour
 {
     [SerializeField] private Vector2Int boardSize = new Vector2Int(11, 11);
     [SerializeField] private GameBoard board = default;
-    [SerializeField] private GameTileContentFactory tileContentFactory = default; 
+    [SerializeField] private GameTileContentFactory tileContentFactory = default;
     [SerializeField] private EnemyFactory enemyFactory = default;
     [SerializeField] private Scenarios scenario;
+    [SerializeField] private MapTable mapTable;
     private int roundIndex;
     private float spawnProgress;
     private bool roundEnd = true;
@@ -20,7 +21,8 @@ public class Game : MonoBehaviour
     Ray TouchRay => Camera.main.ScreenPointToRay(Input.mousePosition);
     void Awake()
     {
-        board.Initialize(boardSize, tileContentFactory);
+        Debug.Log(mapTable.maps[0]);
+        board.Initialize(mapTable.maps[0], tileContentFactory);
         board.ShowGrid = true;
         roundIndex = 0;
     }
@@ -78,7 +80,7 @@ public class Game : MonoBehaviour
             {
                 //board.ToggleTower(tile);
                 Tower tower = board.AddTower(tile);
-                if (tower != null) 
+                if (tower != null)
                     towers.Add(tower);
             }
             else
@@ -140,6 +142,7 @@ public class Game : MonoBehaviour
     }
 
 }
+
 [System.Serializable]
 public class EnemyCollection
 {
@@ -170,7 +173,6 @@ public class EnemyCollection
     }
 }
 
-
 public class TowerCollection
 {
     List<Tower> towers = new List<Tower>();
@@ -187,5 +189,3 @@ public class TowerCollection
         }
     }
 }
-
-
