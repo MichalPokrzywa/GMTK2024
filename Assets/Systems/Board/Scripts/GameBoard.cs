@@ -86,6 +86,10 @@ public class GameBoard : MonoBehaviour
                     GameTile.MakeNorthSouthNeighbors(tile, tiles[i - size.x]);
                 }
                 tile.Content = contentFactory.Get((GameTileContentType)gameMap.values[i]);
+                if (gameMap.values[i] == 3)
+                {
+                    spawnPoints.Add(tile);
+                }
             }
         }
 
@@ -106,7 +110,7 @@ public class GameBoard : MonoBehaviour
         //                break;
         //        }
         //    }
-
+        //
         //}
         //ToggleDestination(tiles[tiles.Length / 2]);
         //ToggleSpawnPoint(tiles[0]);
