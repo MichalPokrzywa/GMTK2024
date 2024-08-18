@@ -15,6 +15,8 @@ public class GameBoard : MonoBehaviour
     private bool showGrid, showPaths;
     public int SpawnPointCount => spawnPoints.Count;
 
+
+
     public bool ShowGrid
     {
         get => showGrid;
@@ -222,9 +224,9 @@ public class GameBoard : MonoBehaviour
     public void ToggleTower(GameTile tile)
     {
         if (tile.Content.Type == GameTileContentType.Tower)
-        {
+        {            
             tile.Content = contentFactory.Get(GameTileContentType.Empty);
-            FindPaths();
+            FindPaths();            
         }
         else if (tile.Content.Type == GameTileContentType.Empty)
         {
@@ -239,5 +241,16 @@ public class GameBoard : MonoBehaviour
         {
             tile.Content = contentFactory.Get(GameTileContentType.Tower);
         }
+        
+    }
+
+    public Tower AddTower(GameTile tile)
+    {
+        if (tile.Content.Type == GameTileContentType.Wall)
+        {
+            tile.Content = contentFactory.Get(GameTileContentType.Tower);
+            return tile.Content.GetComponent<Tower>();
+        }
+        return null;
     }
 }

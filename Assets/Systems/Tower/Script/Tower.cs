@@ -29,7 +29,7 @@ public class Tower : GameTileContent
     public UnityEvent<Tower> onSupport;
     public UnityEvent<Tower> onUnsupport;
 
-    TargetPoint target;
+    Enemy target;
 
     public Transform towerVisual;
     public string towerName;
@@ -218,12 +218,13 @@ public class Tower : GameTileContent
         );
         if (targets.Length > 0)
         {
-            target = targets[0].GetComponent<TargetPoint>();
-            Debug.Assert(target != null, "Targeted non-enemy!", targets[0]);
+            GameObject child = targets[1].GetComponentInParent<GameObject>();
+            Enemy enemy = targets[2].GetComponent<Enemy>();
+            target = enemy;
+            Debug.Log(target == null ? "Targeted non-enemy!" : targets[0]);
             return true;
         }
         target = null;
         return false;
     }
-
 }

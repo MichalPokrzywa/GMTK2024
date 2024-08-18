@@ -60,7 +60,10 @@ public class Game : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.LeftShift))
             {
-                board.ToggleTower(tile);
+                //board.ToggleTower(tile);
+                Tower tower = board.AddTower(tile);
+                if (tower != null) 
+                    towers.Add(tower);
             }
             else
             {
