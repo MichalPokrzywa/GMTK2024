@@ -43,9 +43,11 @@ public class HoverInteraction : Singleton<HoverInteraction>
             {
                 case Wall:
                     Debug.Log(tile.name);
+                    GameBarUI.Instance.ShowBuy();
                     GameBarUI.Instance.ChoseTower(tile);
                     break;
                 case Tower:
+                    GameBarUI.Instance.ShowUpdate();
                     Debug.Log(tile.name);
                     break;
             }

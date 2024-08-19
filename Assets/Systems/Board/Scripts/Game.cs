@@ -131,7 +131,7 @@ public class Game : Singleton<Game>
             boardSize.y = 2;
         }
     }
-    public void addTower(Tower tower)
+    public void AddTower(Tower tower)
     {
         towers.Add(tower);
     }
