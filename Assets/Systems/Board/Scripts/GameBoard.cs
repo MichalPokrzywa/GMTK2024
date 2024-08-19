@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameBoard : MonoBehaviour
+public class GameBoard : Singleton<GameBoard>
 {
     [SerializeField] private Transform ground = default;
     [SerializeField] GameTile tilePrefab = default;
@@ -266,11 +266,11 @@ public class GameBoard : MonoBehaviour
         
     }
 
-    public Tower AddTower(GameTile tile)
+    public Tower AddTower(GameTile tile,int value)
     {
         if (tile.Content.Type == GameTileContentType.Wall)
         {
-            tile.Content = contentFactory.Get(GameTileContentType.Tower);
+            tile.Content = contentFactory.Get(GameTileContentType.Tower,value);
             return tile.Content.GetComponent<Tower>();
         }
         return null;

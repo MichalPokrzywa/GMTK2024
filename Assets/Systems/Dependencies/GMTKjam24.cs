@@ -809,9 +809,18 @@ public partial class @GMTKjam24: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""Cam2"",
-                    ""type"": ""Button"",
+                    ""type"": ""PassThrough"",
                     ""id"": ""8b0737f9-62bb-4a7d-98f8-960b09c652dd"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CameraMove"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""540ac4fc-145e-4701-83a3-6cdaad97548e"",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -837,6 +846,17 @@ public partial class @GMTKjam24: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Cam2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6bbe7934-ce32-4f4f-892c-5b68ee6f9c7e"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": ""ScaleVector2(x=0.5,y=0.5)"",
+                    ""groups"": """",
+                    ""action"": ""CameraMove"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -927,6 +947,7 @@ public partial class @GMTKjam24: IInputActionCollection2, IDisposable
         m_GameView = asset.FindActionMap("GameView", throwIfNotFound: true);
         m_GameView_Cam1 = m_GameView.FindAction("Cam1", throwIfNotFound: true);
         m_GameView_Cam2 = m_GameView.FindAction("Cam2", throwIfNotFound: true);
+        m_GameView_CameraMove = m_GameView.FindAction("CameraMove", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1170,12 +1191,14 @@ public partial class @GMTKjam24: IInputActionCollection2, IDisposable
     private List<IGameViewActions> m_GameViewActionsCallbackInterfaces = new List<IGameViewActions>();
     private readonly InputAction m_GameView_Cam1;
     private readonly InputAction m_GameView_Cam2;
+    private readonly InputAction m_GameView_CameraMove;
     public struct GameViewActions
     {
         private @GMTKjam24 m_Wrapper;
         public GameViewActions(@GMTKjam24 wrapper) { m_Wrapper = wrapper; }
         public InputAction @Cam1 => m_Wrapper.m_GameView_Cam1;
         public InputAction @Cam2 => m_Wrapper.m_GameView_Cam2;
+        public InputAction @CameraMove => m_Wrapper.m_GameView_CameraMove;
         public InputActionMap Get() { return m_Wrapper.m_GameView; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1191,6 +1214,9 @@ public partial class @GMTKjam24: IInputActionCollection2, IDisposable
             @Cam2.started += instance.OnCam2;
             @Cam2.performed += instance.OnCam2;
             @Cam2.canceled += instance.OnCam2;
+            @CameraMove.started += instance.OnCameraMove;
+            @CameraMove.performed += instance.OnCameraMove;
+            @CameraMove.canceled += instance.OnCameraMove;
         }
 
         private void UnregisterCallbacks(IGameViewActions instance)
@@ -1201,6 +1227,9 @@ public partial class @GMTKjam24: IInputActionCollection2, IDisposable
             @Cam2.started -= instance.OnCam2;
             @Cam2.performed -= instance.OnCam2;
             @Cam2.canceled -= instance.OnCam2;
+            @CameraMove.started -= instance.OnCameraMove;
+            @CameraMove.performed -= instance.OnCameraMove;
+            @CameraMove.canceled -= instance.OnCameraMove;
         }
 
         public void RemoveCallbacks(IGameViewActions instance)
@@ -1286,5 +1315,6 @@ public partial class @GMTKjam24: IInputActionCollection2, IDisposable
     {
         void OnCam1(InputAction.CallbackContext context);
         void OnCam2(InputAction.CallbackContext context);
+        void OnCameraMove(InputAction.CallbackContext context);
     }
 }

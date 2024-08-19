@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
@@ -17,7 +18,7 @@ public class GameTileContentFactory : GameObjectFactory
     GameTileContent spawnPointPrefab = default;
 
     [SerializeField]
-    GameTileContent towerPrefab = default;
+    List<GameTileContent> towerPrefab = default;
 
     public void Reclaim(GameTileContent content)
     {
@@ -25,7 +26,7 @@ public class GameTileContentFactory : GameObjectFactory
         Destroy(content.gameObject);
     }
 
-    public GameTileContent Get(GameTileContentType type)
+    public GameTileContent Get(GameTileContentType type, int value = 0)
     {
         switch (type)
         {
@@ -33,7 +34,7 @@ public class GameTileContentFactory : GameObjectFactory
             case GameTileContentType.Wall: return Get(wallPrefab);
             case GameTileContentType.Destination: return Get(destinationPrefab);
             case GameTileContentType.SpawnPoint: return Get(spawnPointPrefab);
-            case GameTileContentType.Tower: return Get(towerPrefab);
+            case GameTileContentType.Tower: return Get(towerPrefab[value]);
         }
         Debug.Assert(false, "Unsupported type: " + type);
         return null;

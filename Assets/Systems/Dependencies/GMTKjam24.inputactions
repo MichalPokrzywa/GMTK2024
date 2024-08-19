@@ -787,9 +787,18 @@
                 },
                 {
                     "name": "Cam2",
-                    "type": "Button",
+                    "type": "PassThrough",
                     "id": "8b0737f9-62bb-4a7d-98f8-960b09c652dd",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "CameraMove",
+                    "type": "PassThrough",
+                    "id": "540ac4fc-145e-4701-83a3-6cdaad97548e",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -815,6 +824,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Cam2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6bbe7934-ce32-4f4f-892c-5b68ee6f9c7e",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "ScaleVector2(x=0.5,y=0.5)",
+                    "groups": "",
+                    "action": "CameraMove",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

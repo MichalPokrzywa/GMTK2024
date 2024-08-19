@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Game : MonoBehaviour
+public class Game : Singleton<Game>
 {
     [SerializeField] private Vector2Int boardSize = new Vector2Int(11, 11);
     [SerializeField] private GameBoard board = default;
@@ -67,8 +67,7 @@ public class Game : MonoBehaviour
     }
     void SpawnEnemy(Enemy i)
     {
-        GameTile spawnPoint =
-            board.GetSpawnPoint(UnityEngine.Random.Range(0, board.SpawnPointCount));
+        GameTile spawnPoint = board.GetSpawnPoint(UnityEngine.Random.Range(0, board.SpawnPointCount));
         Enemy enemy = enemyFactory.Get(i);
         enemy.SpawnOn(spawnPoint);
         enemies.Add(enemy);
@@ -78,10 +77,24 @@ public class Game : MonoBehaviour
         GameTile tile = board.GetTile(TouchRay);
         if (tile != null)
         {
-            if (Input.GetKey(KeyCode.LeftShift))
+            if (Input.GetKey(KeyCode.Q))
             {
                 //board.ToggleTower(tile);
-                Tower tower = board.AddTower(tile);
+                Tower tower = board.AddTower(tile,0);
+                if (tower != null)
+                    towers.Add(tower);
+            }
+            if (Input.GetKey(KeyCode.W))
+            {
+                //board.ToggleTower(tile);
+                Tower tower = board.AddTower(tile,1);
+                if (tower != null)
+                    towers.Add(tower);
+            }
+            if (Input.GetKey(KeyCode.E))
+            {
+                //board.ToggleTower(tile);
+                Tower tower = board.AddTower(tile,2);
                 if (tower != null)
                     towers.Add(tower);
             }
