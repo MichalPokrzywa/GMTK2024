@@ -23,6 +23,7 @@ public class Game : Singleton<Game>
     void Awake()
     {
         Debug.Log(mapTable.maps[0]);
+        GameBarUI.Instance.Initialize(tileContentFactory);
         setupCamera.SetCamera(mapTable.maps[0].xSize, mapTable.maps[0].ySize);
         board.Initialize(mapTable.maps[0], tileContentFactory);
         board.ShowGrid = true;
@@ -98,10 +99,10 @@ public class Game : Singleton<Game>
                 if (tower != null)
                     towers.Add(tower);
             }
-            else
-            {
-                board.ToggleWall(tile);
-            }
+            //else
+            //{
+            //    board.ToggleWall(tile);
+            //}
         }
     }
     void HandleAlternativeTouch()

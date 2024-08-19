@@ -19,6 +19,13 @@ public enum DamageType
     Heavy
 }
 
+public enum TypeTower
+{
+    Bowman =0,
+    Mage = 1,
+    Mortar =2,
+}
+
 [Serializable]
 public struct BonusStats
 {
@@ -31,9 +38,10 @@ public struct BonusStats
 
 public class Tower : GameTileContent
 {
+    public TypeTower typeTower = TypeTower.Bowman;
     public UnityEvent<Tower> onSupport;
     public UnityEvent<Tower> onUnsupport;
-
+    
     TargetPoint target;
 
     public Transform towerVisual;

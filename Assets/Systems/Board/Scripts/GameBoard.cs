@@ -263,16 +263,17 @@ public class GameBoard : Singleton<GameBoard>
         {
             tile.Content = contentFactory.Get(GameTileContentType.Tower);
         }
-        
+
     }
 
-    public Tower AddTower(GameTile tile,int value)
+    public Tower AddTower(GameTile tile, int value)
     {
         if (tile.Content.Type == GameTileContentType.Wall)
         {
-            tile.Content = contentFactory.Get(GameTileContentType.Tower,value);
+            tile.Content = contentFactory.Get(GameTileContentType.Tower, value);
             return tile.Content.GetComponent<Tower>();
         }
         return null;
     }
+
 }

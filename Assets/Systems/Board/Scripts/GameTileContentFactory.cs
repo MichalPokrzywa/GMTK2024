@@ -18,7 +18,7 @@ public class GameTileContentFactory : GameObjectFactory
     GameTileContent spawnPointPrefab = default;
 
     [SerializeField]
-    List<GameTileContent> towerPrefab = default;
+    public List<GameTileContent> towerPrefab = default;
 
     public void Reclaim(GameTileContent content)
     {

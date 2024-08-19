@@ -1,3 +1,4 @@
+using Hover;
 using UnityEngine;
 
 public class GameTile : MonoBehaviour
@@ -31,6 +32,7 @@ public class GameTile : MonoBehaviour
 
     public Direction PathDirection { get; private set; }
 
+    public Outline outline;
     public Vector3 ExitPoint { get; private set; }
 
     public bool IsAlternative { get; set; }

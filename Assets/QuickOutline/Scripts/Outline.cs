@@ -304,7 +304,7 @@ namespace Hover
             mesh.SetTriangles(mesh.triangles, mesh.subMeshCount - 1);
         }
 
-        void UpdateMaterialProperties()
+        public void UpdateMaterialProperties()
         {
 
             // Apply properties according to mode
