@@ -166,6 +166,7 @@ public class Enemy : MonoBehaviour
         this.heavyArmor = heavyArmor;
 
     }
+    //brakuje usuwania przy 0 hp
     public void OnHit(int dmg, DamageType dmgType)
     {
         dmg = dmg + (int)(dmg * cursePower);
@@ -186,7 +187,8 @@ public class Enemy : MonoBehaviour
     {
         return curse;
     }
-
+    //zrob zabezpieczenie ze jak juz ma curse to nowa na nic nie wplywa (prze serii atakow mamy ciekawa sytuacje,
+    //wejdz se do mnie na scene, zbuduj wierze i odpal jak chcesz, to sie posmiejesz[chyba ze juz naprawiles blad przy hp])
     public void setCurse(float time, float power)
     {
         curse = true;
