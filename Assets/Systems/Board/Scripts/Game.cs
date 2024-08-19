@@ -84,14 +84,14 @@ public class Game : Singleton<Game>
                 if (tower != null)
                     towers.Add(tower);
             }
-            if (Input.GetKey(KeyCode.W))
+            else if (Input.GetKey(KeyCode.W))
             {
                 //board.ToggleTower(tile);
                 Tower tower = board.AddTower(tile,1);
                 if (tower != null)
                     towers.Add(tower);
             }
-            if (Input.GetKey(KeyCode.E))
+            else if (Input.GetKey(KeyCode.E))
             {
                 //board.ToggleTower(tile);
                 Tower tower = board.AddTower(tile,2);
