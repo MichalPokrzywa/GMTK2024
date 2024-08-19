@@ -27,6 +27,16 @@ public enum TypeTower
 }
 
 [Serializable]
+public struct BasicStats
+{
+    public int damage;
+    public float range;
+    public float attackSpeed;
+    public BonusStats bonusStats;
+}
+
+
+[Serializable]
 public struct BonusStats
 {
     public int attackProjectalsCount;
@@ -53,20 +63,27 @@ public class Tower : GameTileContent
 
     public int tileId;
 
+    //Basic Stats
     public int damage;
-    public DamageType damageType = DamageType.Medium;
     [SerializeField, Range(1.5f, 10.5f)]
     public float range = 1.5f;
     public float attackSpeed = 1;
+    public BasicStats levelUpStats;
+
+    public DamageType damageType = DamageType.Medium;
     private float timeFromlastAttack;
     private bool isShooting = false;
 
+   
+
+    //Specyfic Stats
     public int attackProjectalsCount = 1;
     public float attackSize = 0;
     public float curseDuration = 0;
     public float cursePower = 0;
-
     public BonusStats supportStats;
+
+
     public List<Tower> supporters = new List<Tower>();
     public Tower supportedTower;
 
@@ -151,6 +168,16 @@ public class Tower : GameTileContent
 
     }
 
+    public void AddStats(BasicStats stats)
+    {
+        damage += stats.damage;
+        range += stats.range;
+        attackSpeed += stats.attackSpeed;
+        attackProjectalsCount += stats.bonusStats.attackProjectalsCount;
+        attackSize += stats.bonusStats.attackSize;
+        curseDuration += stats.bonusStats.curseDuration;
+        cursePower += stats.bonusStats.cursePower;
+    }
     public void AddBonusStats(BonusStats stats)
     {
         attackProjectalsCount += stats.attackProjectalsCount;
@@ -191,6 +218,7 @@ public class Tower : GameTileContent
         if (tier < 3)
         {
             tier++;
+            AddStats(levelUpStats);
             return true;
         }
         return false;
