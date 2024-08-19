@@ -55,7 +55,7 @@ public class Game : Singleton<Game>
         towers.GameUpdate();
     }
 
-    public int getRoundNumber() { return roundIndex; }
+    public int getRoundNumber() { return (roundIndex + 1); }
 
     public void waveController()
     {
@@ -66,7 +66,7 @@ public class Game : Singleton<Game>
             StartCoroutine(SpawnWaves());
         }
     }
-    void SpawnEnemy(Enemy i)
+    public void SpawnEnemy(Enemy i)
     {
         GameTile spawnPoint = board.GetSpawnPoint(UnityEngine.Random.Range(0, board.SpawnPointCount));
         Enemy enemy = enemyFactory.Get(i);

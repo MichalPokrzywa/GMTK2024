@@ -75,13 +75,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3368857004507944482, guid: bfb052f06a7afed419397fb31d014d3a,
         type: 3}
+      propertyPath: gold
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 3368857004507944482, guid: bfb052f06a7afed419397fb31d014d3a,
+        type: 3}
+      propertyPath: maxHp
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 3368857004507944482, guid: bfb052f06a7afed419397fb31d014d3a,
+        type: 3}
       propertyPath: model
       value: 
       objectReference: {fileID: 461910007502135389}
     - target: {fileID: 3368857004507944482, guid: bfb052f06a7afed419397fb31d014d3a,
         type: 3}
       propertyPath: speed
-      value: 0.5
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 3368857004507944482, guid: bfb052f06a7afed419397fb31d014d3a,
         type: 3}

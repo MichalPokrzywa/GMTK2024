@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &5089606868579794926
+--- !u!1001 &7118909504744450910
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -8,30 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1662918021317446089, guid: bfb052f06a7afed419397fb31d014d3a,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
-    - target: {fileID: 1811565225202472121, guid: bfb052f06a7afed419397fb31d014d3a,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1811565225202472121, guid: bfb052f06a7afed419397fb31d014d3a,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1811565225202472121, guid: bfb052f06a7afed419397fb31d014d3a,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.5
-      objectReference: {fileID: 0}
     - target: {fileID: 1925513991964473298, guid: bfb052f06a7afed419397fb31d014d3a,
         type: 3}
       propertyPath: m_Name
-      value: Enemy 1
+      value: Boss
       objectReference: {fileID: 0}
     - target: {fileID: 2668571716558726591, guid: bfb052f06a7afed419397fb31d014d3a,
         type: 3}
@@ -85,52 +65,74 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3368857004507944482, guid: bfb052f06a7afed419397fb31d014d3a,
         type: 3}
-      propertyPath: hp
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 3368857004507944482, guid: bfb052f06a7afed419397fb31d014d3a,
-        type: 3}
       propertyPath: gold
-      value: 5
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 3368857004507944482, guid: bfb052f06a7afed419397fb31d014d3a,
         type: 3}
       propertyPath: maxHp
-      value: 10
+      value: 1000
       objectReference: {fileID: 0}
-    - target: {fileID: 3368857004507944482, guid: bfb052f06a7afed419397fb31d014d3a,
-        type: 3}
-      propertyPath: model
-      value: 
-      objectReference: {fileID: 6882083531467713367}
     - target: {fileID: 3368857004507944482, guid: bfb052f06a7afed419397fb31d014d3a,
         type: 3}
       propertyPath: speed
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3368857004507944482, guid: bfb052f06a7afed419397fb31d014d3a,
-        type: 3}
-      propertyPath: heavyArmor
       value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 3368857004507944482, guid: bfb052f06a7afed419397fb31d014d3a,
         type: 3}
+      propertyPath: heavyArmor
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3368857004507944482, guid: bfb052f06a7afed419397fb31d014d3a,
+        type: 3}
       propertyPath: lightArmor
-      value: 1
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 3368857004507944482, guid: bfb052f06a7afed419397fb31d014d3a,
         type: 3}
       propertyPath: mediumArmor
-      value: 0.4
+      value: 0.3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1925513991964473298, guid: bfb052f06a7afed419397fb31d014d3a,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6210485060421395462}
   m_SourcePrefab: {fileID: 100100000, guid: bfb052f06a7afed419397fb31d014d3a, type: 3}
---- !u!4 &6882083531467713367 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1811565225202472121, guid: bfb052f06a7afed419397fb31d014d3a,
+--- !u!114 &5479728332272156028 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3368857004507944482, guid: bfb052f06a7afed419397fb31d014d3a,
     type: 3}
-  m_PrefabInstance: {fileID: 5089606868579794926}
+  m_PrefabInstance: {fileID: 7118909504744450910}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8679490621660454028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5dc7b6e66ec9a9f47bcb8b0a408dfc4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &8679490621660454028 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1925513991964473298, guid: bfb052f06a7afed419397fb31d014d3a,
+    type: 3}
+  m_PrefabInstance: {fileID: 7118909504744450910}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6210485060421395462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8679490621660454028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f26e4c831311f247a22abdf646884e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cooldown: 10
+  waitnigTime: 2
+  enemy: {fileID: 5479728332272156028}
+  scenario: {fileID: 11400000, guid: 1a05d52107be74c428349da537c38b03, type: 2}

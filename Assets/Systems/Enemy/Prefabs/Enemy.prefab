@@ -47,7 +47,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   model: {fileID: 1811565225202472121}
   speed: 2
-  hp: 50
+  maxHp: 25
+  gold: 10
   lightArmor: 0.8
   mediumArmor: 0.8
   heavyArmor: 1

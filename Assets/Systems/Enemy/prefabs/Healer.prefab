@@ -68,6 +68,36 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3368857004507944482, guid: bfb052f06a7afed419397fb31d014d3a,
+        type: 3}
+      propertyPath: gold
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3368857004507944482, guid: bfb052f06a7afed419397fb31d014d3a,
+        type: 3}
+      propertyPath: maxHp
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 3368857004507944482, guid: bfb052f06a7afed419397fb31d014d3a,
+        type: 3}
+      propertyPath: speed
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3368857004507944482, guid: bfb052f06a7afed419397fb31d014d3a,
+        type: 3}
+      propertyPath: heavyArmor
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3368857004507944482, guid: bfb052f06a7afed419397fb31d014d3a,
+        type: 3}
+      propertyPath: lightArmor
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3368857004507944482, guid: bfb052f06a7afed419397fb31d014d3a,
+        type: 3}
+      propertyPath: mediumArmor
+      value: 0.6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -96,3 +126,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healingRange: {fileID: 0}
+  range: 1.5
+  healCooldown: 4
+  healPower: 5
