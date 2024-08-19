@@ -375,30 +375,14 @@ MonoBehaviour:
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings:
-    - m_Name: ClickModified
-      m_Id: c6cf5241-7f41-485e-b950-37c778fe9a0c
-      m_Path: ButtonWithOneModifier
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Click
-      m_Flags: 4
-    - m_Name: Modifier
-      m_Id: ff32e937-0458-423e-8dce-f3c1b80b95e9
-      m_Path: <Keyboard>/shift
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Click
-      m_Flags: 8
-    - m_Name: Button
-      m_Id: 85b6efcf-9db1-4800-aaa9-177e94bc951d
+    - m_Name: 
+      m_Id: 122b23dc-3381-4093-a5d8-866dff0cf4dc
       m_Path: <Mouse>/leftButton
       m_Interactions: 
       m_Processors: 
       m_Groups: 
       m_Action: Click
-      m_Flags: 8
+      m_Flags: 0
     m_Flags: 0
 --- !u!4 &7506117130427119800 stripped
 Transform:
