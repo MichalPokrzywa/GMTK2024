@@ -52,6 +52,7 @@ MonoBehaviour:
   lightArmor: 0.8
   mediumArmor: 0.8
   heavyArmor: 1
+  dmgToPlayer: 2
 --- !u!1 &2595518874659440456
 GameObject:
   m_ObjectHideFlags: 0

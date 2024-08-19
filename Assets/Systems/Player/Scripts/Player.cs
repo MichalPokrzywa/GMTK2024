@@ -11,7 +11,8 @@ public class Player : Singleton<Player>
     {
         if (playerHp <= 0)
         {
-            //to do endGame
+            Time.timeScale = 0f;
+            GameUI.Instance.EndingScreen();
         }
     }
 

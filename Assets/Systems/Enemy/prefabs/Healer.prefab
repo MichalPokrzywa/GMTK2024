@@ -95,6 +95,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3368857004507944482, guid: bfb052f06a7afed419397fb31d014d3a,
         type: 3}
+      propertyPath: dmgToPlayer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3368857004507944482, guid: bfb052f06a7afed419397fb31d014d3a,
+        type: 3}
       propertyPath: mediumArmor
       value: 0.6
       objectReference: {fileID: 0}
