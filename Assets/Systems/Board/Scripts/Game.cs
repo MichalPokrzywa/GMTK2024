@@ -54,7 +54,7 @@ public class Game : Singleton<Game>
         towers.GameUpdate();
     }
 
-    public int getRoundNumber() { return roundIndex; }
+    public int getRoundNumber() { return (roundIndex + 1); }
 
     public void waveController()
     {

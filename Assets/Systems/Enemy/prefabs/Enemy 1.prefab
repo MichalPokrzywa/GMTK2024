@@ -90,6 +90,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3368857004507944482, guid: bfb052f06a7afed419397fb31d014d3a,
         type: 3}
+      propertyPath: gold
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3368857004507944482, guid: bfb052f06a7afed419397fb31d014d3a,
+        type: 3}
+      propertyPath: maxHp
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3368857004507944482, guid: bfb052f06a7afed419397fb31d014d3a,
+        type: 3}
       propertyPath: model
       value: 
       objectReference: {fileID: 6882083531467713367}

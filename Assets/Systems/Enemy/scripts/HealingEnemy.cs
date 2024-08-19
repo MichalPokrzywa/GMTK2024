@@ -8,27 +8,25 @@ public class HealingEnemy : MonoBehaviour
     private bool cooldown = false;
     [SerializeField] private float range = 1.5f;
     TargetPoint target;
+    [SerializeField] private float healCooldown;
+    [SerializeField] private int healPower;
 
     void Update()
     {
         if (!cooldown)
         {
-            StartCoroutine(WaitForHeal());     
+            StartCoroutine(WaitForHeal(healCooldown));     
             cooldown = true;
         }
     }
 
-    IEnumerator WaitForHeal() {
-        yield return new WaitForSeconds(4f);
+    IEnumerator WaitForHeal(float time) {
+        yield return new WaitForSeconds(time);
         Healing();
         cooldown = false;
     }
+
     private void Healing()
-    {
-
-    }
-
-    bool AcquireTarget()
     {
         Collider[] targets = Physics.OverlapSphere(
             transform.localPosition, range
@@ -37,10 +35,7 @@ public class HealingEnemy : MonoBehaviour
         {
             target = targets[i].GetComponent<TargetPoint>();
             if( target == null ) continue;
-            //target.Enemy.
-            return true;
+            target.Enemy.SetHp(healPower);
         }
-        target = null;
-        return false;
     }
 }

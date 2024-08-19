@@ -17,11 +17,12 @@ public class Enemy : MonoBehaviour
     float progress, progressFactor;
     float pathOffset;
     [SerializeField] float speed;
-    [SerializeField] private int hp;
+    [SerializeField] private int maxHp;
     [SerializeField] private int gold;
     [SerializeField] private float lightArmor;
     [SerializeField] private float mediumArmor;
     [SerializeField] private float heavyArmor;
+    private int currentHp;
     private bool curse;
     private float cursePower;
     private int tilesToEnd;
@@ -38,8 +39,9 @@ public class Enemy : MonoBehaviour
 
     public bool GameUpdate()
     {
-        if (hp <= 0)
+        if (currentHp <= 0)
         {
+            Player.Instance.addGold(gold);
             originFactory.Reclaim(this);
             return false;
         }
@@ -70,11 +72,14 @@ public class Enemy : MonoBehaviour
         return true;
     }
 
+    
+
     public void Initialize(float pathOffset)
     {
         this.pathOffset = pathOffset;
         curse = false;
         cursePower = 0;
+        currentHp = maxHp;
     }
 
     public void SpawnOn(GameTile tile)
@@ -164,27 +169,27 @@ public class Enemy : MonoBehaviour
     }
     public Enemy(int hp, float speed, float lightArmor, float mediumArmor, float heavyArmor)
     {
-        this.hp = hp;
+        this.maxHp = hp;
         this.speed = speed;
         this.lightArmor = lightArmor;
         this.mediumArmor = mediumArmor;
         this.heavyArmor = heavyArmor;
 
     }
-    //brakuje usuwania przy 0 hp
+    //brakuje usuwania przy 0 maxHp
     public void OnHit(int dmg, DamageType dmgType)
     {
         dmg = dmg + (int)(dmg * cursePower);
         switch (dmgType)
         {
             case DamageType.Light:
-                hp = hp - (int)(dmg * lightArmor);
+                currentHp = currentHp - (int)(dmg * lightArmor);
                 break;
             case DamageType.Medium:
-                hp = hp - (int)(dmg * mediumArmor);
+                currentHp = currentHp - (int)(dmg * mediumArmor);
                 break;
             case DamageType.Heavy:
-                hp = hp - (int)(dmg * heavyArmor);
+                currentHp = currentHp - (int)(dmg * heavyArmor);
                 break;
         }
     }
@@ -193,7 +198,7 @@ public class Enemy : MonoBehaviour
         return curse;
     }
     //zrob zabezpieczenie ze jak juz ma curse to nowa na nic nie wplywa (prze serii atakow mamy ciekawa sytuacje,
-    //wejdz se do mnie na scene, zbuduj wierze i odpal jak chcesz, to sie posmiejesz[chyba ze juz naprawiles blad przy hp])
+    //wejdz se do mnie na scene, zbuduj wierze i odpal jak chcesz, to sie posmiejesz[chyba ze juz naprawiles blad przy maxHp])
     public void setCurse(float time, float power)
     {
         if (curse != true)
@@ -215,6 +220,14 @@ public class Enemy : MonoBehaviour
     public float getProgress()
     {
         return tileFrom.getDistance() + progress;
+    }
+
+    public void SetHp(int heal)
+    {
+        if ((currentHp += heal) > maxHp)
+        {
+            currentHp = maxHp;
+        }
     }
 
 }
