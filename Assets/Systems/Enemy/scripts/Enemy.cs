@@ -37,6 +37,15 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    public void setSpeed(float newSpeed)
+    {
+        speed = newSpeed;
+    }
+    public float getSpeed()
+    {
+        return speed;
+    }
+
     public bool GameUpdate()
     {
         if (currentHp <= 0)
