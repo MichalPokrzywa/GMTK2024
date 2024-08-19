@@ -12,6 +12,7 @@ public class Game : MonoBehaviour
     [SerializeField] private EnemyFactory enemyFactory = default;
     [SerializeField] private Scenarios scenario;
     [SerializeField] private MapTable mapTable;
+    [SerializeField] private SetupCamera setupCamera;
     private int roundIndex;
     private float spawnProgress;
     private bool roundEnd = true;
@@ -22,6 +23,7 @@ public class Game : MonoBehaviour
     void Awake()
     {
         Debug.Log(mapTable.maps[0]);
+        setupCamera.SetCamera(mapTable.maps[0].xSize, mapTable.maps[0].ySize);
         board.Initialize(mapTable.maps[0], tileContentFactory);
         board.ShowGrid = true;
         roundIndex = 0;
