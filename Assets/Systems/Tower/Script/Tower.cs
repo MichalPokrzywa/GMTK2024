@@ -5,6 +5,11 @@ using UnityEditor.Rendering;
 using UnityEditor.Rendering.Universal;
 using UnityEngine;
 using UnityEngine.Events;
+using static UnityEngine.ParticleSystem;
+using UnityEngine.Rendering;
+using UnityEditor;
+using System.Drawing;
+using UnityEditor.UIElements;
 
 [Serializable]
 public enum DamageType
@@ -164,22 +169,13 @@ public class Tower : GameTileContent
 
     public override void GameUpdate()
     {
-        if (AcquireTarget())
-        {
-            Debug.Log("Acquired target!");
-        }
         if (!isShooting)
         {
             if (timeFromlastAttack >= attackSpeed)
-            {
-                Aim();
-                
-            }
+                AcquireTarget();
             else
                 timeFromlastAttack += Time.deltaTime;
-            
         }
-        
     }
 
     public bool TierUp()
@@ -205,7 +201,7 @@ public class Tower : GameTileContent
 
     void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.yellow;
+        Gizmos.color = UnityEngine.Color.yellow;
         Vector3 position = transform.localPosition;
         position.y += 0.01f;
         Gizmos.DrawWireSphere(position, range);
@@ -216,18 +212,85 @@ public class Tower : GameTileContent
         Collider[] targets = Physics.OverlapSphere(
             transform.localPosition, range
         );
+
+        //DEBUGOWY
+        attackSpeed = 0.5f;
+
         if (targets.Length > 0)
         {
-            for (int i = 0; i< targets.Length; i++)
+            switch (towerName)
             {
-                target = targets[i].GetComponent<TargetPoint>();
-                if(target != null) break;
-                Debug.Log("Targeted not worked on: " + targets[i]);
+                case "Mage":
+                    //try to fing uncursed target
+                    for (int i = 0; i < targets.Length; i++)
+                    {
+                        target = targets[i].GetComponent<TargetPoint>();
+                        if (target == null) continue;
+                        if (!target.Enemy.getCurse())
+                        {
+                            //invoke attack instead of debug
+                            Debug.Log("Targeted worked on uncursed: " + targets[i]);
+                            UnityEngine.Color color = new UnityEngine.Color(0.3f, 0.6f, 1.0f);
+                            Debug.DrawLine(gameObject.transform.position, target.transform.position, UnityEngine.Color.red, 0.5f);
+                            timeFromlastAttack = 0;
+                            target.Enemy.setCurse(4, 0.5f);
+                            return true;
+                        }
+                    }
+                    //attack random cursed target
+                    for (int i = 0; i < targets.Length; i++)
+                    {
+                        target = targets[i].GetComponent<TargetPoint>();
+                        if (target == null) continue;
+                        Debug.Log("Targeted worked on: " + targets[i]);
+                        Debug.DrawLine(gameObject.transform.position, target.transform.position, UnityEngine.Color.blue, 0.5f);
+                        return true;
+                    }
+                    break;
+                case "Bowman":
+                    //find minimum (min przed przecinkiem, max po)
+                    int min = ((int) range) + 1; ;
+                    float max = 0.0f;
+                    for (int i = 0; i < targets.Length; i++)
+                    {
+                        target = targets[i].GetComponent<TargetPoint>();
+                        if (target == null) continue;   
+                        float progress = target.Enemy.getProgress();
+                        int progressInt = (int) progress;
+                        if (min > progressInt) 
+                            min = progressInt;
+                        if (max < progress - progressInt)
+                            max = progress - progressInt;                       
+                    }
+                    for (int i = 0; i < targets.Length; i++)
+                    {
+                        target = targets[i].GetComponent<TargetPoint>();
+                        if (target == null) continue;
+                        float progress = target.Enemy.getProgress();
+                        int progressInt = (int)progress;
+                        if (min == progressInt && max == progress - progressInt)
+                        {
+                           Debug.DrawLine(gameObject.transform.position, target.transform.position, UnityEngine.Color.blue, 0.5f);
+                           return true;
+                        }
+                    }
+                    break;
+                case "Mortal":
+                    int maxNumberOfTargets = 0;
+                    for (int i = 0; i < targets.Length; i++)
+                    {
+                        target = targets[i].GetComponent<TargetPoint>();
+                        if (target == null) continue;
+                        //create small colider around target
+                        //count colliders
+                        //find maxCount
+                    }
+                    break;
             }
-            Debug.Log(target == null ? "Targeted non-enemy!" : target);
             return true;
         }
         target = null;
         return false;
     }
+    
 }

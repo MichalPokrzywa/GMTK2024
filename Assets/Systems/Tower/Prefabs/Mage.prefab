@@ -58,6 +58,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mage
       objectReference: {fileID: 0}
+    - target: {fileID: 1466194107222461481, guid: e19552696e4c31a4e989a8e16be0978c,
+        type: 3}
+      propertyPath: m_TagString
+      value: Mage
+      objectReference: {fileID: 0}
     - target: {fileID: 2987428919959647121, guid: e19552696e4c31a4e989a8e16be0978c,
         type: 3}
       propertyPath: tier
@@ -152,6 +157,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6527056116661430475, guid: e19552696e4c31a4e989a8e16be0978c,
+        type: 3}
+      propertyPath: m_TagString
+      value: Mage
       objectReference: {fileID: 0}
     - target: {fileID: 8358402335918951100, guid: e19552696e4c31a4e989a8e16be0978c,
         type: 3}
