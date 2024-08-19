@@ -273,14 +273,136 @@ PrefabInstance:
       propertyPath: cmBrain
       value: 
       objectReference: {fileID: 6272378967081066379}
+    - target: {fileID: 5712128966250258239, guid: d986b48fd46738046a8ef407e46f8131,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6523514055634469835, guid: d986b48fd46738046a8ef407e46f8131,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8698922231623689946, guid: d986b48fd46738046a8ef407e46f8131,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6918238162650426419}
+    - targetCorrespondingSourceObject: {fileID: 8698922231623689946, guid: d986b48fd46738046a8ef407e46f8131,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5942462545370918738}
+    - targetCorrespondingSourceObject: {fileID: 193874715638870029, guid: d986b48fd46738046a8ef407e46f8131,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2825064278589862367}
   m_SourcePrefab: {fileID: 100100000, guid: d986b48fd46738046a8ef407e46f8131, type: 3}
+--- !u!4 &2407562130742175410 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 434592714748854581, guid: d986b48fd46738046a8ef407e46f8131,
+    type: 3}
+  m_PrefabInstance: {fileID: 2841378585967978375}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2668803569862968069 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 173358288920896642, guid: d986b48fd46738046a8ef407e46f8131,
+    type: 3}
+  m_PrefabInstance: {fileID: 2841378585967978375}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2728709425422423946 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 193874715638870029, guid: d986b48fd46738046a8ef407e46f8131,
+    type: 3}
+  m_PrefabInstance: {fileID: 2841378585967978375}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2825064278589862367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2728709425422423946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb7194dc27b9df64c8beca7482ee8e0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerIndex: -1
+  AutoEnableInputs: 1
+  XYAxis: {fileID: -7359359324551693478, guid: 1b5f44a2979d96b48981aeae86890d1b, type: 3}
+  ZAxis: {fileID: 0}
+--- !u!1 &6905809793863663965 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8698922231623689946, guid: d986b48fd46738046a8ef407e46f8131,
+    type: 3}
+  m_PrefabInstance: {fileID: 2841378585967978375}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6918238162650426419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6905809793863663965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b36113c04320bbc428d6b8defdb1c4c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraSetting:
+  - {fileID: 7506117130427119800}
+  - {fileID: 2407562130742175410}
+--- !u!114 &5942462545370918738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6905809793863663965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62503f5d1db632548a7ed420ded3009e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clickAction:
+    m_Name: Click
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: ca25c0ae-8208-439b-985e-1d18c692682f
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: ClickModified
+      m_Id: c6cf5241-7f41-485e-b950-37c778fe9a0c
+      m_Path: ButtonWithOneModifier
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Click
+      m_Flags: 4
+    - m_Name: Modifier
+      m_Id: ff32e937-0458-423e-8dce-f3c1b80b95e9
+      m_Path: <Keyboard>/shift
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Click
+      m_Flags: 8
+    - m_Name: Button
+      m_Id: 85b6efcf-9db1-4800-aaa9-177e94bc951d
+      m_Path: <Mouse>/leftButton
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Click
+      m_Flags: 8
+    m_Flags: 0
+--- !u!4 &7506117130427119800 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5712128966250258239, guid: d986b48fd46738046a8ef407e46f8131,
     type: 3}
   m_PrefabInstance: {fileID: 2841378585967978375}
   m_PrefabAsset: {fileID: 0}

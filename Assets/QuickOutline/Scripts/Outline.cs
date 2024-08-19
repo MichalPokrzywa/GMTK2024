@@ -13,8 +13,6 @@ using UnityEngine;
 
 namespace Hover
 {
-
-
     [DisallowMultipleComponent]
 
     public class Outline : MonoBehaviour
