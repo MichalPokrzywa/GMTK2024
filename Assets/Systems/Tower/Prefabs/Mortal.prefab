@@ -90,6 +90,16 @@ PrefabInstance:
       objectReference: {fileID: 649229187165336560}
     - target: {fileID: 2987428919959647121, guid: e19552696e4c31a4e989a8e16be0978c,
         type: 3}
+      propertyPath: levelUpStats.range
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2987428919959647121, guid: e19552696e4c31a4e989a8e16be0978c,
+        type: 3}
+      propertyPath: levelUpStats.damage
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2987428919959647121, guid: e19552696e4c31a4e989a8e16be0978c,
+        type: 3}
       propertyPath: supportStats.attackSize
       value: 0.25
       objectReference: {fileID: 0}
