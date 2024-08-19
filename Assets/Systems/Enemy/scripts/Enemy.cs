@@ -38,6 +38,11 @@ public class Enemy : MonoBehaviour
 
     public bool GameUpdate()
     {
+        if (hp <= 0)
+        {
+            originFactory.Reclaim(this);
+            return false;
+        }
         progress += Time.deltaTime * progressFactor;
         while (progress >= 1f)
         {
@@ -191,10 +196,13 @@ public class Enemy : MonoBehaviour
     //wejdz se do mnie na scene, zbuduj wierze i odpal jak chcesz, to sie posmiejesz[chyba ze juz naprawiles blad przy hp])
     public void setCurse(float time, float power)
     {
-        curse = true;
-        cursePower = power;
-        StartCoroutine(WaitAndExecute(time));
-        transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        if (curse != true)
+        {
+            curse = true;
+            cursePower = power;
+            StartCoroutine(WaitAndExecute(time));
+            transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        }
     }
     IEnumerator WaitAndExecute(float time)
     {
