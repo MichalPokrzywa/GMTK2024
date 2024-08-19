@@ -17,7 +17,7 @@ MonoBehaviour:
     - enemyType: {fileID: 3368857004507944482, guid: bfb052f06a7afed419397fb31d014d3a,
         type: 3}
       enemyAmount: 20
-      timeToSpawn: 0.3
+      timeToSpawn: 0.2
     - enemyType: {fileID: 3368857004507944482, guid: bfb052f06a7afed419397fb31d014d3a,
         type: 3}
       enemyAmount: 20

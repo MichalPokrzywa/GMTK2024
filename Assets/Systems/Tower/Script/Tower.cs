@@ -62,15 +62,8 @@ public class Tower : GameTileContent
     public List<Tower> supporters = new List<Tower>();
     public Tower supportedTower;
 
-    //Public Enemy Target
-
-    public void Aim()
-    {
-        //Find Target
-        //if true Shot
-        //else to nic
-    }
-
+    private int currentSerie;
+    private TargetPoint currentTarget;
 
     public void Support(Tower towerToSuport)
     {
@@ -175,6 +168,13 @@ public class Tower : GameTileContent
                 AcquireTarget();
             else
                 timeFromlastAttack += Time.deltaTime;
+        } 
+        else
+        {
+            if (timeFromlastAttack >= 0.2f)
+                Shoot(currentTarget);
+            else
+                timeFromlastAttack += Time.deltaTime;
         }
     }
 
@@ -212,9 +212,9 @@ public class Tower : GameTileContent
         Collider[] targets = Physics.OverlapSphere(
             transform.localPosition, range
         );
-
-        //DEBUGOWY
-        attackSpeed = 0.5f;
+        //DLA TESTU
+        attackProjectalsCount = 3;
+        currentSerie = attackProjectalsCount;
 
         if (targets.Length > 0)
         {
@@ -228,12 +228,7 @@ public class Tower : GameTileContent
                         if (target == null) continue;
                         if (!target.Enemy.getCurse())
                         {
-                            //invoke attack instead of debug
-                            Debug.Log("Targeted worked on uncursed: " + targets[i]);
-                            UnityEngine.Color color = new UnityEngine.Color(0.3f, 0.6f, 1.0f);
-                            Debug.DrawLine(gameObject.transform.position, target.transform.position, UnityEngine.Color.red, 0.5f);
-                            timeFromlastAttack = 0;
-                            target.Enemy.setCurse(4, 0.5f);
+                            Shoot(target);
                             return true;
                         }
                     }
@@ -242,8 +237,7 @@ public class Tower : GameTileContent
                     {
                         target = targets[i].GetComponent<TargetPoint>();
                         if (target == null) continue;
-                        Debug.Log("Targeted worked on: " + targets[i]);
-                        Debug.DrawLine(gameObject.transform.position, target.transform.position, UnityEngine.Color.blue, 0.5f);
+                        Shoot(target);
                         return true;
                     }
                     break;
@@ -251,6 +245,7 @@ public class Tower : GameTileContent
                     //find minimum (min przed przecinkiem, max po)
                     int min = ((int) range) + 1; ;
                     float max = 0.0f;
+
                     for (int i = 0; i < targets.Length; i++)
                     {
                         target = targets[i].GetComponent<TargetPoint>();
@@ -270,8 +265,8 @@ public class Tower : GameTileContent
                         int progressInt = (int)progress;
                         if (min == progressInt && max == progress - progressInt)
                         {
-                           Debug.DrawLine(gameObject.transform.position, target.transform.position, UnityEngine.Color.blue, 0.5f);
-                           return true;
+                            Shoot(target);
+                            return true;
                         }
                     }
                     break;
@@ -285,6 +280,8 @@ public class Tower : GameTileContent
                         //count colliders
                         //find maxCount
                     }
+                    
+                    Shoot(target);
                     break;
             }
             return true;
@@ -293,4 +290,23 @@ public class Tower : GameTileContent
         return false;
     }
     
+    private bool Shoot (TargetPoint target)
+    {
+        currentTarget = target;
+        isShooting = true;
+        if (target == null)
+        {
+            isShooting = false;
+            return false;
+        }
+        currentSerie--;
+        if (currentSerie <= 0)
+            isShooting = false;
+        //circle -> list -> enemies hitted (for aoe attacks)
+        Debug.DrawLine(gameObject.transform.position, target.transform.position, UnityEngine.Color.red, 0.5f);        
+        target.Enemy.OnHit(damage, damageType);
+        target.Enemy.setCurse(curseDuration, cursePower);       
+        timeFromlastAttack = 0;        
+        return true;
+    }
 }
