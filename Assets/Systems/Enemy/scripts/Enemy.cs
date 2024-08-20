@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
@@ -23,10 +24,13 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float mediumArmor;
     [SerializeField] private float heavyArmor;
     [SerializeField] private int dmgToPlayer;
+    [SerializeField] public Slider healthBar;
+    private bool stop;
     private int currentHp;
     private bool curse;
     private float cursePower;
     private int tilesToEnd;
+    private Camera mainCamera;
 
     public EnemyFactory OriginFactory
     {
@@ -37,25 +41,30 @@ public class Enemy : MonoBehaviour
             originFactory = value;
         }
     }
-
-    public void setSpeed(float newSpeed)
+    void UpdateHealthBar()
     {
-        speed = newSpeed;
+        float value = (currentHp / maxHp) > 0 ? currentHp / maxHp : 0;
+        healthBar.value = value;
     }
-    public float getSpeed()
+
+    public void setStop(bool stop_)
     {
-        return speed;
+        stop = stop_;
     }
 
     public bool GameUpdate()
     {
+        healthBar.transform.LookAt(transform.position + mainCamera.transform.rotation * Vector3.forward,mainCamera.transform.rotation * Vector3.up);
         if (currentHp <= 0)
         {
             Player.Instance.addGold(gold);
             originFactory.Reclaim(this);
             return false;
         }
-        progress += Time.deltaTime * progressFactor;
+        if (!stop)
+        {
+            progress += Time.deltaTime * progressFactor;
+        }
         while (progress >= 1f)
         {
             if (tileTo == null)
@@ -71,7 +80,8 @@ public class Enemy : MonoBehaviour
         if (directionChange == DirectionChange.None)
         {
             transform.localPosition =
-                Vector3.LerpUnclamped(positionFrom, positionTo, progress);
+                Vector3.LerpUnclamped(positionFrom, positionTo, progress
+                );
         }
         else
         {
@@ -91,6 +101,8 @@ public class Enemy : MonoBehaviour
         curse = false;
         cursePower = 0;
         currentHp = maxHp;
+        mainCamera = Camera.main;
+        UpdateHealthBar();
     }
 
     public void SpawnOn(GameTile tile)
@@ -203,6 +215,7 @@ public class Enemy : MonoBehaviour
                 currentHp = currentHp - (int)(dmg * heavyArmor);
                 break;
         }
+        UpdateHealthBar();
     }
     public bool getCurse()
     {

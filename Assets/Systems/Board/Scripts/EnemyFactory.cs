@@ -16,7 +16,6 @@ public class EnemyFactory : GameObjectFactory
     {
         Enemy instance = CreateGameObjectInstance(prefab.Find(o=>o.Equals(ene)));
         instance.OriginFactory = this;
-        //tu do zmiany ta prêdkoœæ tak ¿eby nie by³a losowa tylko odpowiednia dla danego przeciwnika
         instance.Initialize(pathOffset.RandomValueInRange);
         return instance;
     }

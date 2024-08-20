@@ -10,7 +10,6 @@ public class Boss : MonoBehaviour
     [SerializeField]Scenarios scenario;
     private int roundIndex;
     private bool wait = false;
-    private float speedToRecover;
 
     private void Awake()
     {
@@ -30,12 +29,11 @@ public class Boss : MonoBehaviour
 
     IEnumerator waitForReinforcements()
     {
-        speedToRecover = enemy.getSpeed();
-        enemy.setSpeed(0);
+        enemy.setStop(true);
         if(roundIndex == scenario.rounds.Count) roundIndex = 0;
-            SpawnWaves();
+        StartCoroutine(SpawnWaves());
         yield return new WaitForSeconds(waitnigTime);
-        enemy.setSpeed(speedToRecover);
+        enemy.setStop(false);
     }
 
     IEnumerator waitForCooldown()

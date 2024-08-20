@@ -14,8 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab:
   - {fileID: 3368857004507944482, guid: bfb052f06a7afed419397fb31d014d3a, type: 3}
-  - {fileID: 3368857004507944482, guid: bfb052f06a7afed419397fb31d014d3a, type: 3}
-  - {fileID: 0}
+  - {fileID: 7521433468117346764, guid: cb88f9d26fa813547b61f852b72a913c, type: 3}
+  - {fileID: 3569777622297633478, guid: 11146cb5f30bce2438f3842496263a44, type: 3}
+  - {fileID: 8480142798295889305, guid: eb72492624cf43d42b9d39d370f660eb, type: 3}
+  - {fileID: 5479728332272156028, guid: e1ac854e2ba189349a791e4774ee36bb, type: 3}
   pathOffset:
     min: -0.25
     max: 0.25

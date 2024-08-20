@@ -14,15 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rounds:
   - round:
-    - enemyType: {fileID: 3368857004507944482, guid: bfb052f06a7afed419397fb31d014d3a,
+    - enemyType: {fileID: 8480142798295889305, guid: eb72492624cf43d42b9d39d370f660eb,
         type: 3}
-      enemyAmount: 20
-      timeToSpawn: 0.2
-    - enemyType: {fileID: 3368857004507944482, guid: bfb052f06a7afed419397fb31d014d3a,
-        type: 3}
-      enemyAmount: 20
-      timeToSpawn: 0.5
-    - enemyType: {fileID: 3368857004507944482, guid: bfb052f06a7afed419397fb31d014d3a,
-        type: 3}
-      enemyAmount: 20
+      enemyAmount: 2
       timeToSpawn: 0.5
