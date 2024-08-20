@@ -17,10 +17,11 @@ public class CameraChanger : MonoBehaviour
 
     private void Awake()
     {
-        var inputActions = DependencyManager.inputActions.GameView;
+       /* var inputActions = DependencyManager.inputActions.GameView;
 
         camsAndInputs.Add(new(ChangeCamera, CameraType.TopView, inputActions.Cam1));
         camsAndInputs.Add(new(ChangeCamera, CameraType.Rotate, inputActions.Cam2));
+       */
     }
 
     private void OnEnable()

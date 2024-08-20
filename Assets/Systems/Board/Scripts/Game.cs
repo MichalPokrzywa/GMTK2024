@@ -65,6 +65,9 @@ public class Game : Singleton<Game>
             enemiesAreForming = true;
             StartCoroutine(SpawnWaves());
         }
+        //DEBUG
+        enemiesAreForming = true;
+        StartCoroutine(SpawnWaves());
     }
     public void SpawnEnemy(Enemy i)
     {
@@ -83,7 +86,10 @@ public class Game : Singleton<Game>
                 //board.ToggleTower(tile);
                 Tower tower = board.AddTower(tile,0);
                 if (tower != null)
+                {
                     towers.Add(tower);
+                    tower.showRange();
+                }
             }
             else if (Input.GetKey(KeyCode.W))
             {
