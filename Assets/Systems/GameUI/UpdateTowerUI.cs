@@ -16,7 +16,7 @@ public class UpdateTowerUI : MonoBehaviour
     {
         ResetButtons();
         chosenTower = tower;
-        //connectButton.onClick.AddListener(chosenTower.Support(null));
+        connectButton.onClick.AddListener(HoverInteraction.Instance.ChangeToConnect);
         upgradeButton.onClick.AddListener(delegate { chosenTower.TierUp(); });
         removeButton.onClick.AddListener(delegate
         {
@@ -33,5 +33,10 @@ public class UpdateTowerUI : MonoBehaviour
         connectButton.onClick.RemoveAllListeners();
         upgradeButton.onClick.RemoveAllListeners();
         removeButton.onClick.RemoveAllListeners();
+    }
+
+    public void ConnectTowers(Tower tower)
+    {
+        chosenTower.Support(tower);
     }
 }

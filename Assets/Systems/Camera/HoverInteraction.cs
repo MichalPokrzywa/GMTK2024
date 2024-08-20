@@ -12,6 +12,7 @@ public class HoverInteraction : Singleton<HoverInteraction>
 
     private Outline hoveredTile;
     private GameTileContent openedTile = null;
+    private bool toConnect = false;
     // Update is called once per frame
     void Update()
     {
@@ -34,29 +35,49 @@ public class HoverInteraction : Singleton<HoverInteraction>
         }
     }
 
+    public void ChangeToConnect()
+    {
+        toConnect = true;
+    }
+
     private void ProcessInput(Ray ray)
     {
         GameTile tile = GameBoard.Instance.GetTile(ray);
         if (tile != null && tile.Content != openedTile)
         {
-            switch (tile.Content)
+            if (toConnect)
             {
-                case Wall:
-                    Debug.Log(tile.name);
-                    GameBarUI.Instance.ShowBuy();
-                    GameBarUI.Instance.ChoseTower(tile);
-                    break;
-                case Tower:
-                    GameBarUI.Instance.ShowUpdate();
-                    Debug.Log(tile.name);
-                    break;
+                switch (tile.Content)
+                {
+                    case Tower tower:
+                        GameBarUI.Instance.ConnectTower(tower);
+                        toConnect = false;
+                        break;
+                    default:
+                        break;
+                }
             }
-            //HandleOutline(tile.Content);
-            ResetCurrentObject();
-            openedTile = tile.Content;
-            if (hoveredTile != null)
+            else
             {
-                hoveredTile.OutlineColor = Color.yellow;
+                switch (tile.Content)
+                {
+                    case Wall:
+                        Debug.Log(tile.name);
+                        GameBarUI.Instance.ShowBuy();
+                        GameBarUI.Instance.ChoseTower(tile);
+                        break;
+                    case Tower:
+                        GameBarUI.Instance.ShowUpdate();
+                        GameBarUI.Instance.UpdateTower(tile);
+                        Debug.Log(tile.name);
+                        break;
+                }
+                ResetCurrentObject();
+                openedTile = tile.Content;
+                if (hoveredTile != null)
+                {
+                    hoveredTile.OutlineColor = Color.yellow;
+                }
             }
         }
     }

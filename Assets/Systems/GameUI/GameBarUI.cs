@@ -33,4 +33,9 @@ public class GameBarUI : Singleton<GameBarUI>
         var gameTileContent = gameTile.Content as Tower;
         updateTower.SetupButtons(gameTileContent);
     }
+
+    public void ConnectTower(Tower tower)
+    {
+        updateTower.ConnectTowers(tower);
+    }
 }
