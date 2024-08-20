@@ -249,6 +249,8 @@ public class Tower : GameTileContent
             transform.localPosition, range
         );
         currentSerie = attackProjectalsCount;
+        attackSize = 2;
+        damage = 100;
         if (targets.Length > 0)
         {
             switch (towerName)
@@ -362,10 +364,25 @@ public class Tower : GameTileContent
 
     private IEnumerator CreateProjectile(List<TargetPoint> targets, TargetPoint mainTarget)
     {
+        //tworzenie pocisku, nadanie predkosci, usuniecie po trafieniu
         yield return new WaitForSeconds(0.5f);
-        Debug.DrawLine(gameObject.transform.position, target.transform.position, UnityEngine.Color.red, 0.5f);
-        mainTarget.Enemy.OnHit(damage, damageType);
-        mainTarget.Enemy.setCurse(curseDuration, cursePower);
+        if (mainTarget != null)
+        {
+            Debug.DrawLine(gameObject.transform.position, mainTarget.transform.position, UnityEngine.Color.red, 0.5f);
+        }
+        if (targets.Count == 0 && mainTarget != null)
+        {
+            mainTarget.Enemy.OnHit(damage, damageType);
+            mainTarget.Enemy.setCurse(curseDuration, cursePower);
+        } else
+        {
+            for (int i = 0; i < targets.Count; i++)
+            {
+                if (targets[i] == null) continue; 
+                targets[i].Enemy.OnHit(damage, damageType);
+                targets[i].Enemy.setCurse(curseDuration, cursePower);
+            }
+        }
         print("Strzelilem po 0.5 sek");
     }
 }
