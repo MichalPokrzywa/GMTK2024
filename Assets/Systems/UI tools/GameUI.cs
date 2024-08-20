@@ -5,19 +5,20 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameUI : MonoBehaviour
+public class GameUI : Singleton<GameUI>
 {
-    [SerializeField] private TextMeshProUGUI roundsTxt;
-    [SerializeField] private TextMeshProUGUI goldTxt;
-    [SerializeField] private TextMeshProUGUI hpTxt;
+    [SerializeField] private TMP_Text roundsTxt;
+    [SerializeField] private TMP_Text goldTxt;
+    [SerializeField] private TMP_Text hpTxt;
+    [SerializeField] private TMP_Text ending;
     [SerializeField] private Button Button;
-    [SerializeField] private Game game;
     // Start is called before the first frame update
     void Start()
     {
         roundsTxt.text = "Round: ";
         hpTxt.text = "Hp: ";
         goldTxt.text = "Gold: ";
+        ending.gameObject.SetActive(false);
     }
     private void Update()
     {
@@ -25,9 +26,15 @@ public class GameUI : MonoBehaviour
         goldTxt.text = "Gold: " + Player.Instance.getGold().ToString();
     }
 
+    public void EndingScreen()
+    {
+        ending.gameObject.SetActive(true);
+    }
+
+
     public void onButtonClick()
     {
-        roundsTxt.text = "Round: " + game.getRoundNumber();
-        game.waveController();
+        roundsTxt.text = "Round: " + Game.Instance.getRoundNumber();
+        Game.Instance.waveController();
     }
 }

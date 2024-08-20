@@ -22,6 +22,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float lightArmor;
     [SerializeField] private float mediumArmor;
     [SerializeField] private float heavyArmor;
+    [SerializeField] private int dmgToPlayer;
     private int currentHp;
     private bool curse;
     private float cursePower;
@@ -60,6 +61,7 @@ public class Enemy : MonoBehaviour
             if (tileTo == null)
             {
                 OriginFactory.Reclaim(this);
+                Player.Instance.setHp(dmgToPlayer);
                 return false;
             }
             progress = (progress - 1f) / progressFactor;
