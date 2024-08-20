@@ -282,7 +282,8 @@ public class Tower : GameTileContent
                 case "Bowman":
                     //find minimum (min przed przecinkiem, max po)
 
-                    int min = 100; ;
+
+                    int min = 100;
                     float max = 0.0f;
 
                     for (int i = 0; i < targets.Length; i++)
@@ -308,7 +309,10 @@ public class Tower : GameTileContent
                     Shoot(currentTarget);
                     break;
                 case "Mortal":
+                    damage = 200;
                     int maxNumberOfTargets = 1;
+                    attackSize = 3;
+                   
                     for (int i = 0; i < targets.Length; i++)
                     {
                         target = targets[i].GetComponent<TargetPoint>();
@@ -351,7 +355,7 @@ public class Tower : GameTileContent
         if (currentSerie <= 0)
             isShooting = false;
         Collider[] otherTargets = Physics.OverlapSphere(
-            currentTarget.transform.localPosition, attackSize
+            currentTarget.transform.position, attackSize
         );
         List<TargetPoint> targets = new List<TargetPoint>();
         for (int i = 0; i < otherTargets.Length; i++)
@@ -368,11 +372,13 @@ public class Tower : GameTileContent
     private IEnumerator CreateProjectile(List<TargetPoint> targets, TargetPoint mainTarget)
     {
         //tworzenie pocisku, nadanie predkosci, usuniecie po trafieniu
-        yield return new WaitForSeconds(0.5f);
         if (mainTarget != null)
         {
             Debug.DrawLine(gameObject.transform.position, mainTarget.transform.position, UnityEngine.Color.red, 0.5f);
         }
+
+        yield return new WaitForSeconds(0.5f);
+        
         if (targets.Count == 0 && mainTarget != null)
         {
             mainTarget.Enemy.OnHit(damage, damageType);
@@ -392,5 +398,10 @@ public class Tower : GameTileContent
     public void showRange()
     {
         //a bo ja wiem jak to ladnie zrobic
+    }
+
+    public void hideRange() 
+    {
+
     }
 }
