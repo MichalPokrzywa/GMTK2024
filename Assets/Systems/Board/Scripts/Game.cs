@@ -65,9 +65,6 @@ public class Game : Singleton<Game>
             enemiesAreForming = true;
             StartCoroutine(SpawnWaves());
         }
-        //DEBUG
-        enemiesAreForming = true;
-        StartCoroutine(SpawnWaves());
     }
     public void SpawnEnemy(Enemy i)
     {

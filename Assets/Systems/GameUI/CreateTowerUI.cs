@@ -26,7 +26,12 @@ public class CreateTowerUI : MonoBehaviour
         {
             itemUi.buyButton.onClick.RemoveAllListeners();
             var tmp = (Tower)itemUi.tileContent;
-            itemUi.buyButton.onClick.AddListener(delegate { GameBoard.Instance.AddTower(tile, (int)tmp.typeTower); });
+            itemUi.buyButton.onClick.AddListener(delegate 
+            {
+                Tower tower = GameBoard.Instance.AddTower(tile, (int)tmp.typeTower);
+                if (tower != null)
+                    Game.Instance.AddTower(tower);
+            });
         }
     }
 

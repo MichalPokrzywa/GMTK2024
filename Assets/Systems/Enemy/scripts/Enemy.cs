@@ -43,8 +43,7 @@ public class Enemy : MonoBehaviour
     }
     void UpdateHealthBar()
     {
-        float value = (currentHp / maxHp) > 0 ? currentHp / maxHp : 0;
-        healthBar.value = value;
+        healthBar.value = (currentHp < 0) ? 0 : currentHp;  
     }
 
     public void setStop(bool stop_)
@@ -102,7 +101,8 @@ public class Enemy : MonoBehaviour
         cursePower = 0;
         currentHp = maxHp;
         mainCamera = Camera.main;
-        UpdateHealthBar();
+        healthBar.maxValue = maxHp;
+        healthBar.value = currentHp;
     }
 
     public void SpawnOn(GameTile tile)
