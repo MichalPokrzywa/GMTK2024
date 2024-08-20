@@ -248,10 +248,7 @@ public class Tower : GameTileContent
         Collider[] targets = Physics.OverlapSphere(
             transform.localPosition, range
         );
-        //DLA TESTU
-        attackProjectalsCount = 3;
         currentSerie = attackProjectalsCount;
-
         if (targets.Length > 0)
         {
             switch (towerName)
@@ -279,7 +276,8 @@ public class Tower : GameTileContent
                     break;
                 case "Bowman":
                     //find minimum (min przed przecinkiem, max po)
-                    int min = ((int) range) + 1; ;
+
+                    int min = 100; ;
                     float max = 0.0f;
 
                     for (int i = 0; i < targets.Length; i++)
@@ -288,36 +286,44 @@ public class Tower : GameTileContent
                         if (target == null) continue;   
                         float progress = target.Enemy.getProgress();
                         int progressInt = (int) progress;
-                        if (min > progressInt) 
-                            min = progressInt;
-                        if (max < progress - progressInt)
-                            max = progress - progressInt;                       
-                    }
-                    for (int i = 0; i < targets.Length; i++)
-                    {
-                        target = targets[i].GetComponent<TargetPoint>();
-                        if (target == null) continue;
-                        float progress = target.Enemy.getProgress();
-                        int progressInt = (int)progress;
-                        if (min == progressInt && max == progress - progressInt)
+                        if (min > progressInt)
                         {
-                            Shoot(target);
-                            return true;
+                            min = progressInt;
+                            max = progress - progressInt;
+                            currentTarget = target;
+                        } else if (min == progressInt)
+                        {
+                            if (max < progress - progressInt)
+                            {
+                                max = progress - progressInt;
+                                currentTarget = target;
+                            }
                         }
                     }
+                    Shoot(currentTarget);
                     break;
                 case "Mortal":
-                    int maxNumberOfTargets = 0;
+                    int maxNumberOfTargets = 1;
                     for (int i = 0; i < targets.Length; i++)
                     {
                         target = targets[i].GetComponent<TargetPoint>();
                         if (target == null) continue;
-                        //create small colider around target
-                        //count colliders
-                        //find maxCount
-                    }
-                    
-                    Shoot(target);
+                        Collider[] mortalTargets = Physics.OverlapSphere(
+                            target.transform.localPosition, attackSize
+                        );
+                        int targetNum = 1;
+                        for (int j = 0; j < mortalTargets.Length; j++)
+                        {
+                            TargetPoint anotherTarget = mortalTargets[j].GetComponent<TargetPoint>();
+                            if (anotherTarget != null) targetNum++;
+                        }
+                        if (maxNumberOfTargets < targetNum)
+                        {
+                            maxNumberOfTargets = targetNum;
+                            currentTarget = target;
+                        }
+                    }                    
+                    Shoot(currentTarget);
                     break;
             }
             return true;
@@ -327,7 +333,8 @@ public class Tower : GameTileContent
     }
     
     private bool Shoot (TargetPoint target)
-    {
+    { 
+        //ta funkcja wysyla liste targetow do korutyny, ustawia attacs speed
         currentTarget = target;
         isShooting = true;
         if (target == null)
@@ -338,11 +345,27 @@ public class Tower : GameTileContent
         currentSerie--;
         if (currentSerie <= 0)
             isShooting = false;
-        //circle -> list -> enemies hitted (for aoe attacks)
-        Debug.DrawLine(gameObject.transform.position, target.transform.position, UnityEngine.Color.red, 0.5f);        
-        target.Enemy.OnHit(damage, damageType);
-        target.Enemy.setCurse(curseDuration, cursePower);       
-        timeFromlastAttack = 0;        
+        Collider[] otherTargets = Physics.OverlapSphere(
+            currentTarget.transform.localPosition, attackSize
+        );
+        List<TargetPoint> targets = new List<TargetPoint>();
+        for (int i = 0; i < otherTargets.Length; i++)
+        {
+            TargetPoint anotherTarget = otherTargets[i].GetComponent<TargetPoint>();
+            if (anotherTarget != null) targets.Add(anotherTarget);
+        }
+        timeFromlastAttack = 0;
+        IEnumerator coroutine = CreateProjectile(targets, currentTarget);
+        StartCoroutine(coroutine);
         return true;
+    }
+
+    private IEnumerator CreateProjectile(List<TargetPoint> targets, TargetPoint mainTarget)
+    {
+        yield return new WaitForSeconds(0.5f);
+        Debug.DrawLine(gameObject.transform.position, target.transform.position, UnityEngine.Color.red, 0.5f);
+        mainTarget.Enemy.OnHit(damage, damageType);
+        mainTarget.Enemy.setCurse(curseDuration, cursePower);
+        print("Strzelilem po 0.5 sek");
     }
 }
