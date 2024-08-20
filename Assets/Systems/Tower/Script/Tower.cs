@@ -215,9 +215,14 @@ public class Tower : GameTileContent
 
     public bool TierUp()
     {
-        if (tier < 3)
+        Player player = Player.Instance; 
+        if (player == null)  return false;
+        //koszty ulepszen powiedzmy 100 140 180
+        int cost = (tier * 40) + 100; 
+        if (tier < 3 && player.getGold() >= cost)
         {
             tier++;
+            player.takeGold(cost);
             AddStats(levelUpStats);
             return true;
         }
@@ -249,14 +254,12 @@ public class Tower : GameTileContent
             transform.localPosition, range
         );
         currentSerie = attackProjectalsCount;
-        attackSize = 2;
-        damage = 100;
         if (targets.Length > 0)
         {
             switch (towerName)
             {
                 case "Mage":
-                    //try to fing uncursed target
+                    //try to find uncursed target
                     for (int i = 0; i < targets.Length; i++)
                     {
                         target = targets[i].GetComponent<TargetPoint>();
@@ -384,5 +387,10 @@ public class Tower : GameTileContent
             }
         }
         print("Strzelilem po 0.5 sek");
+    }
+
+    public void showRange()
+    {
+        //a bo ja wiem jak to ladnie zrobic
     }
 }

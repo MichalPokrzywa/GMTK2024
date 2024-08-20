@@ -86,7 +86,10 @@ public class Game : Singleton<Game>
                 //board.ToggleTower(tile);
                 Tower tower = board.AddTower(tile,0);
                 if (tower != null)
+                {
                     towers.Add(tower);
+                    tower.showRange();
+                }
             }
             else if (Input.GetKey(KeyCode.W))
             {
